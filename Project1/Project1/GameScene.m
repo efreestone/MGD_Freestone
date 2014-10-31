@@ -21,7 +21,8 @@
 
 @end
 
-//Add standard implementations of vector math routines for projectile trajectory
+//Add standard implementations of vector math routines for projectile trajectory.
+//These are from a raywenderlich.com SpriteKite tutorial
 static inline CGPoint rwAdd(CGPoint a, CGPoint b) {
     return CGPointMake(a.x + b.x, a.y + b.y);
 }
@@ -52,13 +53,10 @@ static inline CGPoint rwNormalize(CGPoint a) {
         //Log out screen size
         NSLog(@"Size = %@", NSStringFromCGSize(size));
         
-        //Set background color
-        //self.backgroundColor = [SKColor colorWithPatternImage:[UIImage imageNamed:@"space~ipad"]];
-        
         //Set background image. It looks like SpriteKit automatically uses the correct asset for the device type.
-        SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"space"];
-        bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
-        [self addChild:bgImage];
+        SKSpriteNode *backgroundImage = [SKSpriteNode spriteNodeWithImageNamed:@"space"];
+        backgroundImage.position = CGPointMake(self.size.width / 2, self.size.height / 2);
+        [self addChild:backgroundImage];
         
         //Add the fighter sprite to the scene w/ postion based on width of fighter and height of frame
         self.playerFighterJet = [SKSpriteNode spriteNodeWithImageNamed:@"fighter"];
@@ -68,7 +66,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     return self;
 }
 
-//Add enemy objects to the scene with random speed and spwan point
+//Add enemy objects to the scene with random speed and spawn points (Y axis)
 -(void)addEnemy {
     //Create enemy sprite
     SKSpriteNode *enemy = [SKSpriteNode spriteNodeWithImageNamed:@"spaceship"];
@@ -97,9 +95,8 @@ static inline CGPoint rwNormalize(CGPoint a) {
 }
 
 //track time since last spawn and add new enemy every 1 second
-- (void)updateWithTimeSinceLastUpdate:(CFTimeInterval)timeSinceLast {
-    
-    self.lastSpawnTimeInterval += timeSinceLast;
+- (void)timeSinceLastSpawn:(CFTimeInterval)timeSinceUpdate {
+    self.lastSpawnTimeInterval += timeSinceUpdate;
     if (self.lastSpawnTimeInterval > 1) {
         self.lastSpawnTimeInterval = 0;
         [self addEnemy];
@@ -119,7 +116,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     }
     
     //Check time since last update and spawn accordingly
-    [self updateWithTimeSinceLastUpdate:timeSinceUpdate];
+    [self timeSinceLastSpawn:timeSinceUpdate];
     
 }
 
@@ -161,9 +158,9 @@ static inline CGPoint rwNormalize(CGPoint a) {
     //Set velocity and create actions for the laser ball
     float velocity = 400.0 * velocityMultiplier;
     float realMoveDuration = self.size.width / velocity;
-    SKAction *actionMove = [SKAction moveTo:finalDestination duration:realMoveDuration];
-    SKAction *actionMoveDone = [SKAction removeFromParent];
-    [laserBall runAction:[SKAction sequence:@[actionMove, actionMoveDone]]];
+    SKAction *actionShoot = [SKAction moveTo:finalDestination duration:realMoveDuration];
+    SKAction *actionShootDone = [SKAction removeFromParent];
+    [laserBall runAction:[SKAction sequence:@[actionShoot, actionShootDone]]];
 }
 
 @end
