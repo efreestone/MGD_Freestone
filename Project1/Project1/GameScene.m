@@ -150,7 +150,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     CGPoint shootOffScreen = rwMult(directionOfShot, 1000);
     
     //Add the shoot amount to the current position
-    CGPoint realDestination = rwAdd(shootOffScreen, laserBall.position);
+    CGPoint finalDestination = rwAdd(shootOffScreen, laserBall.position);
     
     //Calculate velocity multiplier based on device type. Increased for iPad to compensate for larger screen
     float velocityMultiplier = 1.0;
@@ -161,7 +161,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     //Set velocity and create actions for the laser ball
     float velocity = 400.0 * velocityMultiplier;
     float realMoveDuration = self.size.width / velocity;
-    SKAction *actionMove = [SKAction moveTo:realDestination duration:realMoveDuration];
+    SKAction *actionMove = [SKAction moveTo:finalDestination duration:realMoveDuration];
     SKAction *actionMoveDone = [SKAction removeFromParent];
     [laserBall runAction:[SKAction sequence:@[actionMove, actionMoveDone]]];
 }
