@@ -10,7 +10,6 @@
 		B82C38BC1A0301DE00F4C306 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B82C38BB1A0301DE00F4C306 /* main.m */; };
 		B82C38BF1A0301DE00F4C306 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B82C38BE1A0301DE00F4C306 /* AppDelegate.m */; };
 		B82C38C21A0301DE00F4C306 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B82C38C11A0301DE00F4C306 /* GameScene.m */; };
-		B82C38C41A0301DE00F4C306 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B82C38C31A0301DE00F4C306 /* GameScene.sks */; };
 		B82C38C71A0301DE00F4C306 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B82C38C61A0301DE00F4C306 /* GameViewController.m */; };
 		B82C38CA1A0301DE00F4C306 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B82C38C81A0301DE00F4C306 /* Main.storyboard */; };
 		B82C38CC1A0301DE00F4C306 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B82C38CB1A0301DE00F4C306 /* Images.xcassets */; };
@@ -20,6 +19,10 @@
 		B82C38F01A03030500F4C306 /* Icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B82C38E61A03030500F4C306 /* Icon-76@2x.png */; };
 		B82C38F11A03030500F4C306 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B82C38E71A03030500F4C306 /* Icon.png */; };
 		B82C38F21A03030500F4C306 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B82C38E81A03030500F4C306 /* Icon@2x.png */; };
+		B8330ADE1A03FAA100B1B502 /* asteroid-1.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330ADB1A03FAA100B1B502 /* asteroid-1.png */; };
+		B8330ADF1A03FAA100B1B502 /* fighter.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330ADC1A03FAA100B1B502 /* fighter.png */; };
+		B8330AE01A03FAA100B1B502 /* red-laser.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330ADD1A03FAA100B1B502 /* red-laser.png */; };
+		B8330AE21A03FF0C00B1B502 /* fighter-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AE11A03FF0C00B1B502 /* fighter-hd.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +43,6 @@
 		B82C38BE1A0301DE00F4C306 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		B82C38C01A0301DE00F4C306 /* GameScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
 		B82C38C11A0301DE00F4C306 /* GameScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
-		B82C38C31A0301DE00F4C306 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		B82C38C51A0301DE00F4C306 /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		B82C38C61A0301DE00F4C306 /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		B82C38C91A0301DE00F4C306 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -53,6 +55,10 @@
 		B82C38E61A03030500F4C306 /* Icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76@2x.png"; sourceTree = "<group>"; };
 		B82C38E71A03030500F4C306 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		B82C38E81A03030500F4C306 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		B8330ADB1A03FAA100B1B502 /* asteroid-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "asteroid-1.png"; sourceTree = "<group>"; };
+		B8330ADC1A03FAA100B1B502 /* fighter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fighter.png; sourceTree = "<group>"; };
+		B8330ADD1A03FAA100B1B502 /* red-laser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-laser.png"; sourceTree = "<group>"; };
+		B8330AE11A03FF0C00B1B502 /* fighter-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fighter-hd.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,12 +100,12 @@
 		B82C38B81A0301DE00F4C306 /* Project1 */ = {
 			isa = PBXGroup;
 			children = (
+				B8330ADA1A03FAA100B1B502 /* art */,
 				B82C38E41A03030500F4C306 /* images */,
 				B82C38BD1A0301DE00F4C306 /* AppDelegate.h */,
 				B82C38BE1A0301DE00F4C306 /* AppDelegate.m */,
 				B82C38C01A0301DE00F4C306 /* GameScene.h */,
 				B82C38C11A0301DE00F4C306 /* GameScene.m */,
-				B82C38C31A0301DE00F4C306 /* GameScene.sks */,
 				B82C38C51A0301DE00F4C306 /* GameViewController.h */,
 				B82C38C61A0301DE00F4C306 /* GameViewController.m */,
 				B82C38C81A0301DE00F4C306 /* Main.storyboard */,
@@ -145,6 +151,17 @@
 				B82C38E81A03030500F4C306 /* Icon@2x.png */,
 			);
 			path = images;
+			sourceTree = "<group>";
+		};
+		B8330ADA1A03FAA100B1B502 /* art */ = {
+			isa = PBXGroup;
+			children = (
+				B8330AE11A03FF0C00B1B502 /* fighter-hd.png */,
+				B8330ADB1A03FAA100B1B502 /* asteroid-1.png */,
+				B8330ADC1A03FAA100B1B502 /* fighter.png */,
+				B8330ADD1A03FAA100B1B502 /* red-laser.png */,
+			);
+			path = art;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -227,14 +244,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8330AE01A03FAA100B1B502 /* red-laser.png in Resources */,
 				B82C38CF1A0301DE00F4C306 /* LaunchScreen.xib in Resources */,
 				B82C38F21A03030500F4C306 /* Icon@2x.png in Resources */,
 				B82C38CC1A0301DE00F4C306 /* Images.xcassets in Resources */,
+				B8330ADE1A03FAA100B1B502 /* asteroid-1.png in Resources */,
 				B82C38EF1A03030500F4C306 /* Icon-76.png in Resources */,
-				B82C38C41A0301DE00F4C306 /* GameScene.sks in Resources */,
 				B82C38F01A03030500F4C306 /* Icon-76@2x.png in Resources */,
+				B8330AE21A03FF0C00B1B502 /* fighter-hd.png in Resources */,
 				B82C38F11A03030500F4C306 /* Icon.png in Resources */,
 				B82C38CA1A0301DE00F4C306 /* Main.storyboard in Resources */,
+				B8330ADF1A03FAA100B1B502 /* fighter.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,6 +468,7 @@
 				B82C38E01A0301DE00F4C306 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B82C38E11A0301DE00F4C306 /* Build configuration list for PBXNativeTarget "Project1Tests" */ = {
 			isa = XCConfigurationList;
@@ -456,6 +477,7 @@
 				B82C38E31A0301DE00F4C306 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
