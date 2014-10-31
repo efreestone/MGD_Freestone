@@ -22,9 +22,15 @@
 		B8330ADE1A03FAA100B1B502 /* asteroid-1.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330ADB1A03FAA100B1B502 /* asteroid-1.png */; };
 		B8330ADF1A03FAA100B1B502 /* fighter.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330ADC1A03FAA100B1B502 /* fighter.png */; };
 		B8330AE01A03FAA100B1B502 /* red-laser.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330ADD1A03FAA100B1B502 /* red-laser.png */; };
-		B8330AE21A03FF0C00B1B502 /* fighter-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AE11A03FF0C00B1B502 /* fighter-hd.png */; };
-		B8330AE41A04140100B1B502 /* laser-ball.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AE31A04140100B1B502 /* laser-ball.png */; };
+		B8330AE41A04140100B1B502 /* laser-ball~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AE31A04140100B1B502 /* laser-ball~ipad.png */; };
 		B8330AE61A04176B00B1B502 /* spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AE51A04176B00B1B502 /* spaceship.png */; };
+		B8330AEC1A042AEC00B1B502 /* space~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AEB1A042AEC00B1B502 /* space~ipad.png */; };
+		B8330AEE1A042BF600B1B502 /* space~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AED1A042BF600B1B502 /* space~iphone.png */; };
+		B8330AF01A042F6900B1B502 /* space~ipad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AEF1A042F6900B1B502 /* space~ipad@2x.png */; };
+		B8330AF21A042F7300B1B502 /* space~iphone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AF11A042F7300B1B502 /* space~iphone@2x.png */; };
+		B8330AF41A042FC000B1B502 /* fighter~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AF31A042FC000B1B502 /* fighter~ipad.png */; };
+		B8330AF61A04314700B1B502 /* spaceship~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AF51A04314700B1B502 /* spaceship~ipad.png */; };
+		B8330AF81A04324900B1B502 /* laser-ball.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AF71A04324900B1B502 /* laser-ball.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,9 +66,15 @@
 		B8330ADB1A03FAA100B1B502 /* asteroid-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "asteroid-1.png"; sourceTree = "<group>"; };
 		B8330ADC1A03FAA100B1B502 /* fighter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fighter.png; sourceTree = "<group>"; };
 		B8330ADD1A03FAA100B1B502 /* red-laser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-laser.png"; sourceTree = "<group>"; };
-		B8330AE11A03FF0C00B1B502 /* fighter-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fighter-hd.png"; sourceTree = "<group>"; };
-		B8330AE31A04140100B1B502 /* laser-ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "laser-ball.png"; sourceTree = "<group>"; };
+		B8330AE31A04140100B1B502 /* laser-ball~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "laser-ball~ipad.png"; sourceTree = "<group>"; };
 		B8330AE51A04176B00B1B502 /* spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spaceship.png; sourceTree = "<group>"; };
+		B8330AEB1A042AEC00B1B502 /* space~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "space~ipad.png"; sourceTree = "<group>"; };
+		B8330AED1A042BF600B1B502 /* space~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "space~iphone.png"; sourceTree = "<group>"; };
+		B8330AEF1A042F6900B1B502 /* space~ipad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "space~ipad@2x.png"; sourceTree = "<group>"; };
+		B8330AF11A042F7300B1B502 /* space~iphone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "space~iphone@2x.png"; sourceTree = "<group>"; };
+		B8330AF31A042FC000B1B502 /* fighter~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fighter~ipad.png"; sourceTree = "<group>"; };
+		B8330AF51A04314700B1B502 /* spaceship~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spaceship~ipad.png"; sourceTree = "<group>"; };
+		B8330AF71A04324900B1B502 /* laser-ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "laser-ball.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,9 +172,15 @@
 		B8330ADA1A03FAA100B1B502 /* art */ = {
 			isa = PBXGroup;
 			children = (
+				B8330AF71A04324900B1B502 /* laser-ball.png */,
+				B8330AF51A04314700B1B502 /* spaceship~ipad.png */,
+				B8330AF31A042FC000B1B502 /* fighter~ipad.png */,
+				B8330AF11A042F7300B1B502 /* space~iphone@2x.png */,
+				B8330AEF1A042F6900B1B502 /* space~ipad@2x.png */,
+				B8330AED1A042BF600B1B502 /* space~iphone.png */,
+				B8330AEB1A042AEC00B1B502 /* space~ipad.png */,
 				B8330AE51A04176B00B1B502 /* spaceship.png */,
-				B8330AE31A04140100B1B502 /* laser-ball.png */,
-				B8330AE11A03FF0C00B1B502 /* fighter-hd.png */,
+				B8330AE31A04140100B1B502 /* laser-ball~ipad.png */,
 				B8330ADB1A03FAA100B1B502 /* asteroid-1.png */,
 				B8330ADC1A03FAA100B1B502 /* fighter.png */,
 				B8330ADD1A03FAA100B1B502 /* red-laser.png */,
@@ -250,19 +268,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8330AEC1A042AEC00B1B502 /* space~ipad.png in Resources */,
+				B8330AF61A04314700B1B502 /* spaceship~ipad.png in Resources */,
 				B8330AE01A03FAA100B1B502 /* red-laser.png in Resources */,
 				B82C38CF1A0301DE00F4C306 /* LaunchScreen.xib in Resources */,
 				B82C38F21A03030500F4C306 /* Icon@2x.png in Resources */,
 				B82C38CC1A0301DE00F4C306 /* Images.xcassets in Resources */,
-				B8330AE41A04140100B1B502 /* laser-ball.png in Resources */,
+				B8330AEE1A042BF600B1B502 /* space~iphone.png in Resources */,
+				B8330AF01A042F6900B1B502 /* space~ipad@2x.png in Resources */,
+				B8330AE41A04140100B1B502 /* laser-ball~ipad.png in Resources */,
 				B8330ADE1A03FAA100B1B502 /* asteroid-1.png in Resources */,
 				B8330AE61A04176B00B1B502 /* spaceship.png in Resources */,
 				B82C38EF1A03030500F4C306 /* Icon-76.png in Resources */,
+				B8330AF81A04324900B1B502 /* laser-ball.png in Resources */,
 				B82C38F01A03030500F4C306 /* Icon-76@2x.png in Resources */,
-				B8330AE21A03FF0C00B1B502 /* fighter-hd.png in Resources */,
+				B8330AF21A042F7300B1B502 /* space~iphone@2x.png in Resources */,
 				B82C38F11A03030500F4C306 /* Icon.png in Resources */,
 				B82C38CA1A0301DE00F4C306 /* Main.storyboard in Resources */,
 				B8330ADF1A03FAA100B1B502 /* fighter.png in Resources */,
+				B8330AF41A042FC000B1B502 /* fighter~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

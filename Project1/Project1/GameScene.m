@@ -53,11 +53,16 @@ static inline CGPoint rwNormalize(CGPoint a) {
         NSLog(@"Size = %@", NSStringFromCGSize(size));
         
         //Set background color
-        self.backgroundColor = [SKColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+        //self.backgroundColor = [SKColor colorWithPatternImage:[UIImage imageNamed:@"space~ipad"]];
         
-        //Add the fighter sprite to the scene w/ postion based on width of gfighter and height of frame
+        //Set background image. It looks like SpriteKit automatically uses the correct asset for the device type.
+        SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"space"];
+        bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
+        [self addChild:bgImage];
+        
+        //Add the fighter sprite to the scene w/ postion based on width of fighter and height of frame
         self.playerFighterJet = [SKSpriteNode spriteNodeWithImageNamed:@"fighter"];
-        self.playerFighterJet.position = CGPointMake(75, self.frame.size.height / 2);
+        self.playerFighterJet.position = CGPointMake(self.playerFighterJet.size.width * 0.75, self.frame.size.height / 2);
         [self addChild:self.playerFighterJet];
     }
     return self;
@@ -147,8 +152,14 @@ static inline CGPoint rwNormalize(CGPoint a) {
     //Add the shoot amount to the current position
     CGPoint realDestination = rwAdd(shootOffScreen, laserBall.position);
     
+    //Calculate velocity multiplier based on device type. Increased for iPad to compensate for larger screen
+    float velocityMultiplier = 1.0;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        velocityMultiplier = 2.5;
+    }
+    
     //Set velocity and create actions for the laser ball
-    float velocity = 480.0/1.0;
+    float velocity = 400.0 * velocityMultiplier;
     float realMoveDuration = self.size.width / velocity;
     SKAction *actionMove = [SKAction moveTo:realDestination duration:realMoveDuration];
     SKAction *actionMoveDone = [SKAction removeFromParent];
