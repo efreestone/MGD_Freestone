@@ -134,13 +134,14 @@ static inline CGPoint rwNormalize(CGPoint a) {
     //Determine offset of location to fighter
     CGPoint offset = rwSub(location, laserBall.position);
     
-    //Bail out if shooting down or backwards
+    //Make sure not shooting backwards or up/down
     if (offset.x <= 0) return;
     
     //Position has been double-checked, add laser ball sprite
     [self addChild:laserBall];
     
     //Get the direction of where to shoot laser ball
+    //rwNormalize is a unit vector of length 1
     CGPoint directionOfShot = rwNormalize(offset);
     
     //Shoot far enough for the laser ball to leave the screen
