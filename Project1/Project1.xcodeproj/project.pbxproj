@@ -32,6 +32,8 @@
 		B8330AF61A04314700B1B502 /* spaceship~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AF51A04314700B1B502 /* spaceship~ipad.png */; };
 		B8330AF81A04324900B1B502 /* laser-ball.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AF71A04324900B1B502 /* laser-ball.png */; };
 		B8330AFA1A04388800B1B502 /* space~iphone@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AF91A04388800B1B502 /* space~iphone@3x.png */; };
+		B84AD57A1A046319003580C2 /* explosion.caf in Resources */ = {isa = PBXBuildFile; fileRef = B84AD5781A046319003580C2 /* explosion.caf */; };
+		B84AD57B1A046319003580C2 /* laser.caf in Resources */ = {isa = PBXBuildFile; fileRef = B84AD5791A046319003580C2 /* laser.caf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,8 @@
 		B8330AF51A04314700B1B502 /* spaceship~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spaceship~ipad.png"; sourceTree = "<group>"; };
 		B8330AF71A04324900B1B502 /* laser-ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "laser-ball.png"; sourceTree = "<group>"; };
 		B8330AF91A04388800B1B502 /* space~iphone@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "space~iphone@3x.png"; sourceTree = "<group>"; };
+		B84AD5781A046319003580C2 /* explosion.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = explosion.caf; sourceTree = "<group>"; };
+		B84AD5791A046319003580C2 /* laser.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = laser.caf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +122,7 @@
 		B82C38B81A0301DE00F4C306 /* Project1 */ = {
 			isa = PBXGroup;
 			children = (
+				B84AD5771A046319003580C2 /* sounds */,
 				B8330ADA1A03FAA100B1B502 /* art */,
 				B82C38E41A03030500F4C306 /* images */,
 				B82C38BD1A0301DE00F4C306 /* AppDelegate.h */,
@@ -189,6 +194,15 @@
 				B8330ADD1A03FAA100B1B502 /* red-laser.png */,
 			);
 			path = art;
+			sourceTree = "<group>";
+		};
+		B84AD5771A046319003580C2 /* sounds */ = {
+			isa = PBXGroup;
+			children = (
+				B84AD5781A046319003580C2 /* explosion.caf */,
+				B84AD5791A046319003580C2 /* laser.caf */,
+			);
+			path = sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -279,6 +293,7 @@
 				B82C38CC1A0301DE00F4C306 /* Images.xcassets in Resources */,
 				B8330AEE1A042BF600B1B502 /* space~iphone.png in Resources */,
 				B8330AF01A042F6900B1B502 /* space~ipad@2x.png in Resources */,
+				B84AD57B1A046319003580C2 /* laser.caf in Resources */,
 				B8330AE41A04140100B1B502 /* laser-ball~ipad.png in Resources */,
 				B8330ADE1A03FAA100B1B502 /* asteroid-1.png in Resources */,
 				B8330AFA1A04388800B1B502 /* space~iphone@3x.png in Resources */,
@@ -286,6 +301,7 @@
 				B82C38EF1A03030500F4C306 /* Icon-76.png in Resources */,
 				B8330AF81A04324900B1B502 /* laser-ball.png in Resources */,
 				B82C38F01A03030500F4C306 /* Icon-76@2x.png in Resources */,
+				B84AD57A1A046319003580C2 /* explosion.caf in Resources */,
 				B8330AF21A042F7300B1B502 /* space~iphone@2x.png in Resources */,
 				B82C38F11A03030500F4C306 /* Icon.png in Resources */,
 				B82C38CA1A0301DE00F4C306 /* Main.storyboard in Resources */,

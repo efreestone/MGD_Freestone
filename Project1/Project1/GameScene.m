@@ -46,7 +46,11 @@ static inline CGPoint rwNormalize(CGPoint a) {
 }
 
 
-@implementation GameScene
+@implementation GameScene {
+    //Declare sound actions to be loaded ahead of time
+    SKAction *laserSoundAction;
+    SKAction *hitEnemySoundAction;
+}
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
@@ -62,6 +66,10 @@ static inline CGPoint rwNormalize(CGPoint a) {
         self.playerFighterJet = [SKSpriteNode spriteNodeWithImageNamed:@"fighter"];
         self.playerFighterJet.position = CGPointMake(self.playerFighterJet.size.width * 0.75, self.frame.size.height / 2);
         [self addChild:self.playerFighterJet];
+        
+        //Initiate sounds for laser fire and hitting an enemy spaceship
+        laserSoundAction = [SKAction playSoundFileNamed:@"laser.caf" waitForCompletion:NO];
+        hitEnemySoundAction = [SKAction playSoundFileNamed:@"explosion.caf" waitForCompletion:NO];
     }
     return self;
 }
@@ -162,6 +170,8 @@ static inline CGPoint rwNormalize(CGPoint a) {
     SKAction *actionShoot = [SKAction moveTo:finalDestination duration:realMoveDuration];
     SKAction *actionShootDone = [SKAction removeFromParent];
     [laserBall runAction:[SKAction sequence:@[actionShoot, actionShootDone]]];
+    //Play laser fire sound
+    [self runAction:laserSoundAction];
 }
 
 @end
