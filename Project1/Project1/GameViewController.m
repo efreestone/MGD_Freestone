@@ -54,6 +54,7 @@
 //    [skView presentScene:scene];
 //}
 
+//Move scene creation from viewDidLoad to insure view is created
 -(void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
