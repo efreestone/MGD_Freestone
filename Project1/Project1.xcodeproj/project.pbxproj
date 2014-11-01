@@ -34,6 +34,10 @@
 		B8330AFA1A04388800B1B502 /* space@3x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AF91A04388800B1B502 /* space@3x~iphone.png */; };
 		B84AD57A1A046319003580C2 /* explosion.caf in Resources */ = {isa = PBXBuildFile; fileRef = B84AD5781A046319003580C2 /* explosion.caf */; };
 		B84AD57B1A046319003580C2 /* laser.caf in Resources */ = {isa = PBXBuildFile; fileRef = B84AD5791A046319003580C2 /* laser.caf */; };
+		B8D8B4881A0554090052FBCF /* Default@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B8D8B4841A0554090052FBCF /* Default@2x~ipad.png */; };
+		B8D8B4891A0554090052FBCF /* Default@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = B8D8B4851A0554090052FBCF /* Default@2x~iphone.png */; };
+		B8D8B48A1A0554090052FBCF /* Default~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B8D8B4861A0554090052FBCF /* Default~ipad.png */; };
+		B8D8B48B1A0554090052FBCF /* Default~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = B8D8B4871A0554090052FBCF /* Default~iphone.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +85,10 @@
 		B8330AF91A04388800B1B502 /* space@3x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "space@3x~iphone.png"; sourceTree = "<group>"; };
 		B84AD5781A046319003580C2 /* explosion.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = explosion.caf; sourceTree = "<group>"; };
 		B84AD5791A046319003580C2 /* laser.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = laser.caf; sourceTree = "<group>"; };
+		B8D8B4841A0554090052FBCF /* Default@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x~ipad.png"; sourceTree = "<group>"; };
+		B8D8B4851A0554090052FBCF /* Default@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x~iphone.png"; sourceTree = "<group>"; };
+		B8D8B4861A0554090052FBCF /* Default~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default~ipad.png"; sourceTree = "<group>"; };
+		B8D8B4871A0554090052FBCF /* Default~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default~iphone.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +176,10 @@
 		B82C38E41A03030500F4C306 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				B8D8B4841A0554090052FBCF /* Default@2x~ipad.png */,
+				B8D8B4851A0554090052FBCF /* Default@2x~iphone.png */,
+				B8D8B4861A0554090052FBCF /* Default~ipad.png */,
+				B8D8B4871A0554090052FBCF /* Default~iphone.png */,
 				B82C38E51A03030500F4C306 /* Icon-76.png */,
 				B82C38E61A03030500F4C306 /* Icon-76@2x.png */,
 				B82C38E71A03030500F4C306 /* Icon.png */,
@@ -285,6 +297,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8D8B4891A0554090052FBCF /* Default@2x~iphone.png in Resources */,
 				B8330AEC1A042AEC00B1B502 /* space~ipad.png in Resources */,
 				B8330AF61A04314700B1B502 /* spaceship~ipad.png in Resources */,
 				B8330AE01A03FAA100B1B502 /* red-laser.png in Resources */,
@@ -301,11 +314,14 @@
 				B82C38EF1A03030500F4C306 /* Icon-76.png in Resources */,
 				B8330AF81A04324900B1B502 /* laser-ball.png in Resources */,
 				B82C38F01A03030500F4C306 /* Icon-76@2x.png in Resources */,
+				B8D8B48B1A0554090052FBCF /* Default~iphone.png in Resources */,
 				B84AD57A1A046319003580C2 /* explosion.caf in Resources */,
 				B8330AF21A042F7300B1B502 /* space@2x~iphone.png in Resources */,
 				B82C38F11A03030500F4C306 /* Icon.png in Resources */,
 				B82C38CA1A0301DE00F4C306 /* Main.storyboard in Resources */,
+				B8D8B48A1A0554090052FBCF /* Default~ipad.png in Resources */,
 				B8330ADF1A03FAA100B1B502 /* fighter.png in Resources */,
+				B8D8B4881A0554090052FBCF /* Default@2x~ipad.png in Resources */,
 				B8330AF41A042FC000B1B502 /* fighter~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -450,6 +466,8 @@
 		B82C38DF1A0301DE00F4C306 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = Project1/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -460,6 +478,8 @@
 		B82C38E01A0301DE00F4C306 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = Project1/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
