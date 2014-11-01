@@ -13,8 +13,12 @@
 
 #import "GameScene.h"
 
+//Set up category constants for laser balls and enemy spaceships
+static const uint32_t laserBallCategory =  0x1 << 0;
+static const uint32_t enemyShipCategory =  0x1 << 1;
+
 //Create private interface and variable for player fighter jet
-@interface GameScene ()
+@interface GameScene () <SKPhysicsContactDelegate>
 @property (nonatomic) SKSpriteNode *playerFighterJet;
 @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
@@ -67,6 +71,10 @@ static inline CGPoint rwNormalize(CGPoint a) {
         self.playerFighterJet.position = CGPointMake(self.playerFighterJet.size.width * 0.75, self.frame.size.height / 2);
         [self addChild:self.playerFighterJet];
         
+        //Set up physics world with zero gravity
+        self.physicsWorld.gravity = CGVectorMake(0,0);
+        self.physicsWorld.contactDelegate = self;
+        
         //Initiate sounds for laser fire and hitting an enemy spaceship
         laserSoundAction = [SKAction playSoundFileNamed:@"laser.caf" waitForCompletion:NO];
         hitEnemySoundAction = [SKAction playSoundFileNamed:@"explosion.caf" waitForCompletion:NO];
@@ -75,19 +83,26 @@ static inline CGPoint rwNormalize(CGPoint a) {
 }
 
 //Add enemy objects to the scene with random speed and spawn points (Y axis)
--(void)addEnemy {
+-(void)addEnemyShip {
     //Create enemy sprite
-    SKSpriteNode *enemy = [SKSpriteNode spriteNodeWithImageNamed:@"spaceship"];
+    SKSpriteNode *enemyShip = [SKSpriteNode spriteNodeWithImageNamed:@"spaceship"];
+    //Set physics body to radius around enemy spaceship
+    enemyShip.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:enemyShip.size.width / 2];
+    enemyShip.physicsBody.dynamic = YES;
+    //Set category, contact and collision
+    enemyShip.physicsBody.categoryBitMask = enemyShipCategory;
+    enemyShip.physicsBody.contactTestBitMask = laserBallCategory;
+    enemyShip.physicsBody.collisionBitMask = 0; // 5
     
     //Create a random Y axis to spawn enemy
-    int minimumY = enemy.size.height / 2;
-    int maximumY = self.frame.size.height - enemy.size.height / 2;
+    int minimumY = enemyShip.size.height / 2;
+    int maximumY = self.frame.size.height - enemyShip.size.height / 2;
     int rangeOfY = maximumY - minimumY;
     int actualYAxis = (arc4random() % rangeOfY) + minimumY;
     
     //Spawn enemy just passed right edge of screen w/ a random Y postion
-    enemy.position = CGPointMake(self.frame.size.width + enemy.size.width/2, actualYAxis);
-    [self addChild:enemy];
+    enemyShip.position = CGPointMake(self.frame.size.width + enemyShip.size.width/2, actualYAxis);
+    [self addChild:enemyShip];
     
     //Determine varied speed of enemies from right to left
     int minDuration = 2.0;
@@ -96,10 +111,9 @@ static inline CGPoint rwNormalize(CGPoint a) {
     int actualDuration = (arc4random() % rangeDuration) + minDuration;
     
     //Create move action from right to left and remove enemy once off screen
-    SKAction *actionMove = [SKAction moveTo:CGPointMake(-enemy.size.width/2, actualYAxis) duration:actualDuration];
+    SKAction *actionMove = [SKAction moveTo:CGPointMake(-enemyShip.size.width/2, actualYAxis) duration:actualDuration];
     SKAction * actionMoveDone = [SKAction removeFromParent];
-    [enemy runAction:[SKAction sequence:@[actionMove, actionMoveDone]]];
-    
+    [enemyShip runAction:[SKAction sequence:@[actionMove, actionMoveDone]]];
 }
 
 //track time since last spawn and add new enemy every 1 second
@@ -107,7 +121,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     self.lastSpawnTimeInterval += timeSinceUpdate;
     if (self.lastSpawnTimeInterval > 1) {
         self.lastSpawnTimeInterval = 0;
-        [self addEnemy];
+        [self addEnemyShip];
     }
 }
 
@@ -138,6 +152,13 @@ static inline CGPoint rwNormalize(CGPoint a) {
     //Set initial location of projectile to the fighter
     SKSpriteNode *laserBall = [SKSpriteNode spriteNodeWithImageNamed:@"laser-ball"];
     laserBall.position = self.playerFighterJet.position;
+    laserBall.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:laserBall.size.width/2];
+    laserBall.physicsBody.dynamic = YES;
+    //Set category, contact and collision
+    laserBall.physicsBody.categoryBitMask = laserBallCategory;
+    laserBall.physicsBody.contactTestBitMask = enemyShipCategory;
+    laserBall.physicsBody.collisionBitMask = 0;
+    laserBall.physicsBody.usesPreciseCollisionDetection = YES;
     
     //Determine offset of location to fighter
     CGPoint offset = rwSub(location, laserBall.position);
@@ -172,6 +193,35 @@ static inline CGPoint rwNormalize(CGPoint a) {
     [laserBall runAction:[SKAction sequence:@[actionShoot, actionShootDone]]];
     //Play laser fire sound
     [self runAction:laserSoundAction];
+}
+
+//Remove ship and laser ball when collision detected
+-(void)laserBall:(SKSpriteNode *)laserBall didCollideWithEnemyShip:(SKSpriteNode *)enemyShip {
+    NSLog(@"Hit");
+    //Remove nodes that collided
+    [laserBall removeFromParent];
+    [enemyShip removeFromParent];
+}
+
+//Contact delegate method. Triggers removal method when collision is detected
+-(void)didBeginContact:(SKPhysicsContact *)contact {
+    //Set physics bodies as generics.
+    SKPhysicsBody *firstBody, *secondBody;
+    //Order is not gauranteed so sort by category
+    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
+        firstBody = contact.bodyA;
+        secondBody = contact.bodyB;
+    } else {
+        firstBody = contact.bodyB;
+        secondBody = contact.bodyA;
+    }
+    
+    //Call remove method if physics bodies are laserBall and enemyShip
+    if ((firstBody.categoryBitMask & laserBallCategory) != 0 && (secondBody.categoryBitMask & enemyShipCategory) != 0) {
+        [self laserBall:(SKSpriteNode *) firstBody.node didCollideWithEnemyShip:(SKSpriteNode *) secondBody.node];
+        //Play explosion sound
+        [self runAction:hitEnemySoundAction];
+    }
 }
 
 @end
