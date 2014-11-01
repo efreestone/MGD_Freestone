@@ -14,6 +14,7 @@
 #import "GameScene.h"
 
 //Set up category constants for laser balls and enemy spaceships
+//SpriteKit uses 32 bit ints that act as bitmasks
 static const uint32_t laserBallCategory =  0x1 << 0;
 static const uint32_t enemyShipCategory =  0x1 << 1;
 
@@ -54,6 +55,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     //Declare sound actions to be loaded ahead of time
     SKAction *laserSoundAction;
     SKAction *hitEnemySoundAction;
+    SKSpriteNode *laserBall;
 }
 
 -(id)initWithSize:(CGSize)size {
@@ -116,6 +118,20 @@ static inline CGPoint rwNormalize(CGPoint a) {
     [enemyShip runAction:[SKAction sequence:@[actionMove, actionMoveDone]]];
 }
 
+-(void)addLaserBall {
+    //Set initial location of projectile to the fighter
+    laserBall = [SKSpriteNode spriteNodeWithImageNamed:@"laser-ball"];
+    laserBall.position = self.playerFighterJet.position;
+    laserBall.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:laserBall.size.width/2];
+    laserBall.physicsBody.dynamic = YES;
+    //Set category, contact and collision
+    laserBall.physicsBody.categoryBitMask = laserBallCategory;
+    laserBall.physicsBody.contactTestBitMask = enemyShipCategory;
+    laserBall.physicsBody.collisionBitMask = 0;
+    laserBall.physicsBody.usesPreciseCollisionDetection = YES;
+
+}
+
 //track time since last spawn and add new enemy every 1 second
 - (void)timeSinceLastSpawn:(CFTimeInterval)timeSinceUpdate {
     self.lastSpawnTimeInterval += timeSinceUpdate;
@@ -149,16 +165,8 @@ static inline CGPoint rwNormalize(CGPoint a) {
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     
-    //Set initial location of projectile to the fighter
-    SKSpriteNode *laserBall = [SKSpriteNode spriteNodeWithImageNamed:@"laser-ball"];
-    laserBall.position = self.playerFighterJet.position;
-    laserBall.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:laserBall.size.width/2];
-    laserBall.physicsBody.dynamic = YES;
-    //Set category, contact and collision
-    laserBall.physicsBody.categoryBitMask = laserBallCategory;
-    laserBall.physicsBody.contactTestBitMask = enemyShipCategory;
-    laserBall.physicsBody.collisionBitMask = 0;
-    laserBall.physicsBody.usesPreciseCollisionDetection = YES;
+    //Call method to add laser ball
+    [self addLaserBall];
     
     //Determine offset of location to fighter
     CGPoint offset = rwSub(location, laserBall.position);
@@ -190,22 +198,19 @@ static inline CGPoint rwNormalize(CGPoint a) {
     float realMoveDuration = self.size.width / velocity;
     SKAction *actionShoot = [SKAction moveTo:finalDestination duration:realMoveDuration];
     SKAction *actionShootDone = [SKAction removeFromParent];
-    [laserBall runAction:[SKAction sequence:@[actionShoot, actionShootDone]]];
+    //Make sure laser ball exists
+    if (laserBall != nil) {
+        [laserBall runAction:[SKAction sequence:@[actionShoot, actionShootDone]]];
+    } else {
+        NSLog(@"laserBall node NIL!");
+    }
     //Play laser fire sound
     [self runAction:laserSoundAction];
 }
 
-//Remove ship and laser ball when collision detected
--(void)laserBall:(SKSpriteNode *)laserBall didCollideWithEnemyShip:(SKSpriteNode *)enemyShip {
-    NSLog(@"Hit");
-    //Remove nodes that collided
-    [laserBall removeFromParent];
-    [enemyShip removeFromParent];
-}
-
 //Contact delegate method. Triggers removal method when collision is detected
 -(void)didBeginContact:(SKPhysicsContact *)contact {
-    //Set physics bodies as generics.
+    //Set physics bodies w/ generic names.
     SKPhysicsBody *firstBody, *secondBody;
     //Order is not gauranteed so sort by category
     if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
@@ -222,6 +227,14 @@ static inline CGPoint rwNormalize(CGPoint a) {
         //Play explosion sound
         [self runAction:hitEnemySoundAction];
     }
+}
+
+//Remove ship and laser ball when collision detected
+-(void)laserBall:(SKSpriteNode *)passedLaserBall didCollideWithEnemyShip:(SKSpriteNode *)passedEnemyShip {
+    NSLog(@"Hit");
+    //Remove nodes that collided
+    [passedLaserBall removeFromParent];
+    [passedEnemyShip removeFromParent];
 }
 
 @end

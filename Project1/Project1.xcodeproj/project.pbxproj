@@ -26,12 +26,12 @@
 		B8330AE61A04176B00B1B502 /* spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AE51A04176B00B1B502 /* spaceship.png */; };
 		B8330AEC1A042AEC00B1B502 /* space~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AEB1A042AEC00B1B502 /* space~ipad.png */; };
 		B8330AEE1A042BF600B1B502 /* space~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AED1A042BF600B1B502 /* space~iphone.png */; };
-		B8330AF01A042F6900B1B502 /* space~ipad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AEF1A042F6900B1B502 /* space~ipad@2x.png */; };
-		B8330AF21A042F7300B1B502 /* space~iphone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AF11A042F7300B1B502 /* space~iphone@2x.png */; };
+		B8330AF01A042F6900B1B502 /* space@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AEF1A042F6900B1B502 /* space@2x~ipad.png */; };
+		B8330AF21A042F7300B1B502 /* space@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AF11A042F7300B1B502 /* space@2x~iphone.png */; };
 		B8330AF41A042FC000B1B502 /* fighter~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AF31A042FC000B1B502 /* fighter~ipad.png */; };
 		B8330AF61A04314700B1B502 /* spaceship~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AF51A04314700B1B502 /* spaceship~ipad.png */; };
 		B8330AF81A04324900B1B502 /* laser-ball.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AF71A04324900B1B502 /* laser-ball.png */; };
-		B8330AFA1A04388800B1B502 /* space~iphone@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AF91A04388800B1B502 /* space~iphone@3x.png */; };
+		B8330AFA1A04388800B1B502 /* space@3x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = B8330AF91A04388800B1B502 /* space@3x~iphone.png */; };
 		B84AD57A1A046319003580C2 /* explosion.caf in Resources */ = {isa = PBXBuildFile; fileRef = B84AD5781A046319003580C2 /* explosion.caf */; };
 		B84AD57B1A046319003580C2 /* laser.caf in Resources */ = {isa = PBXBuildFile; fileRef = B84AD5791A046319003580C2 /* laser.caf */; };
 /* End PBXBuildFile section */
@@ -73,12 +73,12 @@
 		B8330AE51A04176B00B1B502 /* spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spaceship.png; sourceTree = "<group>"; };
 		B8330AEB1A042AEC00B1B502 /* space~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "space~ipad.png"; sourceTree = "<group>"; };
 		B8330AED1A042BF600B1B502 /* space~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "space~iphone.png"; sourceTree = "<group>"; };
-		B8330AEF1A042F6900B1B502 /* space~ipad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "space~ipad@2x.png"; sourceTree = "<group>"; };
-		B8330AF11A042F7300B1B502 /* space~iphone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "space~iphone@2x.png"; sourceTree = "<group>"; };
+		B8330AEF1A042F6900B1B502 /* space@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "space@2x~ipad.png"; sourceTree = "<group>"; };
+		B8330AF11A042F7300B1B502 /* space@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "space@2x~iphone.png"; sourceTree = "<group>"; };
 		B8330AF31A042FC000B1B502 /* fighter~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fighter~ipad.png"; sourceTree = "<group>"; };
 		B8330AF51A04314700B1B502 /* spaceship~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spaceship~ipad.png"; sourceTree = "<group>"; };
 		B8330AF71A04324900B1B502 /* laser-ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "laser-ball.png"; sourceTree = "<group>"; };
-		B8330AF91A04388800B1B502 /* space~iphone@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "space~iphone@3x.png"; sourceTree = "<group>"; };
+		B8330AF91A04388800B1B502 /* space@3x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "space@3x~iphone.png"; sourceTree = "<group>"; };
 		B84AD5781A046319003580C2 /* explosion.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = explosion.caf; sourceTree = "<group>"; };
 		B84AD5791A046319003580C2 /* laser.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = laser.caf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -179,12 +179,12 @@
 		B8330ADA1A03FAA100B1B502 /* art */ = {
 			isa = PBXGroup;
 			children = (
-				B8330AF91A04388800B1B502 /* space~iphone@3x.png */,
+				B8330AF91A04388800B1B502 /* space@3x~iphone.png */,
 				B8330AF71A04324900B1B502 /* laser-ball.png */,
 				B8330AF51A04314700B1B502 /* spaceship~ipad.png */,
 				B8330AF31A042FC000B1B502 /* fighter~ipad.png */,
-				B8330AF11A042F7300B1B502 /* space~iphone@2x.png */,
-				B8330AEF1A042F6900B1B502 /* space~ipad@2x.png */,
+				B8330AF11A042F7300B1B502 /* space@2x~iphone.png */,
+				B8330AEF1A042F6900B1B502 /* space@2x~ipad.png */,
 				B8330AED1A042BF600B1B502 /* space~iphone.png */,
 				B8330AEB1A042AEC00B1B502 /* space~ipad.png */,
 				B8330AE51A04176B00B1B502 /* spaceship.png */,
@@ -292,17 +292,17 @@
 				B82C38F21A03030500F4C306 /* Icon@2x.png in Resources */,
 				B82C38CC1A0301DE00F4C306 /* Images.xcassets in Resources */,
 				B8330AEE1A042BF600B1B502 /* space~iphone.png in Resources */,
-				B8330AF01A042F6900B1B502 /* space~ipad@2x.png in Resources */,
+				B8330AF01A042F6900B1B502 /* space@2x~ipad.png in Resources */,
 				B84AD57B1A046319003580C2 /* laser.caf in Resources */,
 				B8330AE41A04140100B1B502 /* laser-ball~ipad.png in Resources */,
 				B8330ADE1A03FAA100B1B502 /* asteroid-1.png in Resources */,
-				B8330AFA1A04388800B1B502 /* space~iphone@3x.png in Resources */,
+				B8330AFA1A04388800B1B502 /* space@3x~iphone.png in Resources */,
 				B8330AE61A04176B00B1B502 /* spaceship.png in Resources */,
 				B82C38EF1A03030500F4C306 /* Icon-76.png in Resources */,
 				B8330AF81A04324900B1B502 /* laser-ball.png in Resources */,
 				B82C38F01A03030500F4C306 /* Icon-76@2x.png in Resources */,
 				B84AD57A1A046319003580C2 /* explosion.caf in Resources */,
-				B8330AF21A042F7300B1B502 /* space~iphone@2x.png in Resources */,
+				B8330AF21A042F7300B1B502 /* space@2x~iphone.png in Resources */,
 				B82C38F11A03030500F4C306 /* Icon.png in Resources */,
 				B82C38CA1A0301DE00F4C306 /* Main.storyboard in Resources */,
 				B8330ADF1A03FAA100B1B502 /* fighter.png in Resources */,
