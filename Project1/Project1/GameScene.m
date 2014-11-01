@@ -25,6 +25,7 @@ static const uint32_t enemyShipCategory =  0x1 << 1;
 @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
 @property (nonatomic) int enemyShipsDestroyed;
+@property (nonatomic) int enemyShipsMissed;
 
 @end
 
@@ -58,6 +59,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     SKAction *laserSoundAction;
     SKAction *hitEnemySoundAction;
     SKSpriteNode *laserBall;
+    SKLabelNode *scoreLabel;
 }
 
 -(id)initWithSize:(CGSize)size {
@@ -78,6 +80,16 @@ static inline CGPoint rwNormalize(CGPoint a) {
         //Set up physics world with zero gravity
         self.physicsWorld.gravity = CGVectorMake(0,0);
         self.physicsWorld.contactDelegate = self;
+        
+        //Create and display score label
+        scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
+        scoreLabel.text = @"Score: 0";
+        scoreLabel.fontColor = [SKColor whiteColor];
+        scoreLabel.fontSize = 15;
+        scoreLabel.position = CGPointMake(50, 15);
+        [self addChild:scoreLabel];
+        
+        self.enemyShipsDestroyed = 0;
         
         //Initiate sounds for laser fire and hitting an enemy spaceship
         laserSoundAction = [SKAction playSoundFileNamed:@"laser.caf" waitForCompletion:NO];
@@ -121,7 +133,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     
     //Create loseAction with block to show Game Over Scene if an enemy get by
     SKAction * loseAction = [SKAction runBlock:^{
-        SKTransition *revealGameLost = [SKTransition flipHorizontalWithDuration:0.5];
+        SKTransition *revealGameLost = [SKTransition doorsOpenVerticalWithDuration:0.5];
         SKScene * gameLostScene = [[GameOverScene alloc] initWithSize:self.size didPlayerWin:NO];
         [self.view presentScene:gameLostScene transition: revealGameLost];
     }];
@@ -262,10 +274,12 @@ static inline CGPoint rwNormalize(CGPoint a) {
     [passedLaserBall removeFromParent];
     [passedEnemyShip removeFromParent];
     
-    //Keep track of enemy ships destroyed, revealing game won scene once 15 destroyed
+    //Keep track of enemy ships destroyed and update score
     self.enemyShipsDestroyed++;
-    if (self.enemyShipsDestroyed > 15) {
-        SKTransition *revealGameWon = [SKTransition flipVerticalWithDuration:0.5];
+    [scoreLabel setText:[NSString stringWithFormat:@"Score: %d", self.enemyShipsDestroyed]];
+    //Reveal game won scene once 15 ships destroyed
+    if (self.enemyShipsDestroyed >= 15) {
+        SKTransition *revealGameWon = [SKTransition doorsOpenVerticalWithDuration:0.5];
         SKScene *gameWonScene = [[GameOverScene alloc] initWithSize:self.size didPlayerWin:YES];
         [self.view presentScene:gameWonScene transition:revealGameWon];
     }

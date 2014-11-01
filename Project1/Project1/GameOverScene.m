@@ -24,18 +24,23 @@
             messageString = @"Congratulations, you won!";
         }
         
+        CGFloat fontSize = 40;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            fontSize = 95;
+        }
+        
         //Create and set message label
         SKLabelNode *messageLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
         messageLabel.text = messageString;
         messageLabel.fontColor = [SKColor whiteColor];
-        messageLabel.fontSize = 45;
+        messageLabel.fontSize = fontSize;
         messageLabel.position = CGPointMake(self.size.width / 2, self.size.height / 2);
         [self addChild:messageLabel];
         
         //Create actions to wait 2 seconds and go back to Game Scene
         SKAction *waitDuration = [SKAction waitForDuration:2.0];
         SKAction *revealGameScene = [SKAction runBlock:^{
-            SKTransition *reveal = [SKTransition flipHorizontalWithDuration:0.5];
+            SKTransition *reveal = [SKTransition doorsCloseVerticalWithDuration:0.5];
             SKScene * myScene = [[GameScene alloc] initWithSize:self.size];
             [self.view presentScene:myScene transition: reveal];
         }];
