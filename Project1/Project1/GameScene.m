@@ -12,6 +12,7 @@
 //
 
 #import "GameScene.h"
+#import "GameOverScene.h"
 
 //Set up category constants for laser balls and enemy spaceships
 //SpriteKit uses 32 bit ints that act as bitmasks
@@ -23,6 +24,7 @@ static const uint32_t enemyShipCategory =  0x1 << 1;
 @property (nonatomic) SKSpriteNode *playerFighterJet;
 @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
+@property (nonatomic) int enemyShipsDestroyed;
 
 @end
 
@@ -114,8 +116,16 @@ static inline CGPoint rwNormalize(CGPoint a) {
     
     //Create move action from right to left and remove enemy once off screen
     SKAction *actionMove = [SKAction moveTo:CGPointMake(-enemyShip.size.width/2, actualYAxis) duration:actualDuration];
-    SKAction * actionMoveDone = [SKAction removeFromParent];
-    [enemyShip runAction:[SKAction sequence:@[actionMove, actionMoveDone]]];
+    SKAction *actionMoveDone = [SKAction removeFromParent];
+    //[enemyShip runAction:[SKAction sequence:@[actionMove, actionMoveDone]]];
+    
+    //Create loseAction with block to show Game Over Scene if an enemy get by
+    SKAction * loseAction = [SKAction runBlock:^{
+        SKTransition *revealGameLost = [SKTransition flipHorizontalWithDuration:0.5];
+        SKScene * gameLostScene = [[GameOverScene alloc] initWithSize:self.size didPlayerWin:NO];
+        [self.view presentScene:gameLostScene transition: revealGameLost];
+    }];
+    [enemyShip runAction:[SKAction sequence:@[actionMove, loseAction, actionMoveDone]]];
 }
 
 -(void)addLaserBall {
@@ -187,6 +197,22 @@ static inline CGPoint rwNormalize(CGPoint a) {
     //Add the shoot amount to the current position
     CGPoint finalDestination = rwAdd(shootOffScreen, laserBall.position);
     
+//    float angleRadians = atan2f(directionOfShot.y , directionOfShot.x);
+//    CGFloat angleDegrees = angleRadians * (180/M_PI);
+//    angleDegrees = (angleDegrees > 0.0 ? angleDegrees : (360.0 + angleDegrees));
+//    CGPoint playerPoint = self.playerFighterJet.position;
+//    
+//    CGFloat f = [self pointPairToBearingDegrees:playerPoint secondPoint:directionOfShot];
+//
+//    CGFloat angle = self.zRotation + directionOfShot.y;
+    
+//    CGFloat angle = atan2f(location.x, location.y);
+//    CGFloat angleDegrees = angle * (180/M_PI);
+//    NSLog(@"Angle: %f", angle);
+//    self.playerFighterJet.zRotation = angleDegrees;
+//    SKAction *rotatePlayer = [SKAction rotateByAngle:angle duration:0.15f];
+//    //[self.playerFighterJet runAction:rotatePlayer];
+    
     //Calculate velocity multiplier based on device type. Increased for iPad to compensate for larger screen
     float velocityMultiplier = 1.0;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
@@ -235,6 +261,14 @@ static inline CGPoint rwNormalize(CGPoint a) {
     //Remove nodes that collided
     [passedLaserBall removeFromParent];
     [passedEnemyShip removeFromParent];
+    
+    //Keep track of enemy ships destroyed, revealing game won scene once 15 destroyed
+    self.enemyShipsDestroyed++;
+    if (self.enemyShipsDestroyed > 15) {
+        SKTransition *revealGameWon = [SKTransition flipVerticalWithDuration:0.5];
+        SKScene *gameWonScene = [[GameOverScene alloc] initWithSize:self.size didPlayerWin:YES];
+        [self.view presentScene:gameWonScene transition:revealGameWon];
+    }
 }
 
 @end
