@@ -1,3 +1,8 @@
+// Elijah Freestone
+// MGD 1411
+// Week 1
+// October 30th, 2014
+
 /*
  * SpriteBuilder: http://www.spritebuilder.org
  *
@@ -21,7 +26,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- */
+ */ 
 
 #import "cocos2d.h"
 

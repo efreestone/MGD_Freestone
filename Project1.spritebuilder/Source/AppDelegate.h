@@ -1,3 +1,8 @@
+// Elijah Freestone
+// MGD 1411
+// Week 1 
+// October 30th, 2014
+
 /*
  * SpriteBuilder: http://www.spritebuilder.org
  *
