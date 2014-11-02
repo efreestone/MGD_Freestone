@@ -1,3 +1,8 @@
+// Elijah Freestone
+// MGD 1411
+// Week 1
+// November 1st, 2014
+
 //
 //  GameOverScene.m
 //  Project1
@@ -11,6 +16,7 @@
 
 @implementation GameOverScene
 
+//Use custom init to pass in playerWin bool and change display accordingly
 -(id)initWithSize:(CGSize)size didPlayerWin:(BOOL)playerWin {
     if (self = [super initWithSize:size]) {
         //Set background image. It looks like SpriteKit automatically uses the correct asset for the device type.
@@ -26,7 +32,7 @@
         
         CGFloat fontSize = 40;
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-            fontSize = 95;
+            fontSize = 75;
         }
         
         //Create and set message label

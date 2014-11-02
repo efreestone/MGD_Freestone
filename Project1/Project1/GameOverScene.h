@@ -1,3 +1,8 @@
+// Elijah Freestone
+// MGD 1411
+// Week 1
+// November 1st, 2014
+
 //
 //  GameOverScene.h
 //  Project1
@@ -10,6 +15,7 @@
 
 @interface GameOverScene : SKScene
 
+//Create custom init to pass in playerWin bool and change display accordingly
 -(id)initWithSize:(CGSize)size didPlayerWin:(BOOL)playerWin;
 
 @end

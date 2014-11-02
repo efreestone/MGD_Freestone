@@ -21,11 +21,12 @@ static const uint32_t enemyShipCategory =  0x1 << 1;
 
 //Create private interface and variable for player fighter jet
 @interface GameScene () <SKPhysicsContactDelegate>
-@property (nonatomic) SKSpriteNode *playerFighterJet;
+@property (strong, nonatomic) SKSpriteNode *playerFighterJet;
 @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
 @property (nonatomic) int enemyShipsDestroyed;
 @property (nonatomic) int enemyShipsMissed;
+@property (strong, nonatomic) SKLabelNode *scoreLabel;
 
 @end
 
@@ -59,7 +60,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     SKAction *laserSoundAction;
     SKAction *hitEnemySoundAction;
     SKSpriteNode *laserBall;
-    SKLabelNode *scoreLabel;
+    
 }
 
 -(id)initWithSize:(CGSize)size {
@@ -72,6 +73,17 @@ static inline CGPoint rwNormalize(CGPoint a) {
         backgroundImage.position = CGPointMake(self.size.width / 2, self.size.height / 2);
         [self addChild:backgroundImage];
         
+        //Create and display score label
+        self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
+    //This line is comment out to fix odd issue with iPad running iOS 7.0.4.
+        //self.scoreLabel.text = @"Score: 0";
+        self.scoreLabel.fontColor = [SKColor whiteColor];
+        self.scoreLabel.fontSize = 15;
+        self.scoreLabel.zPosition = 4;
+        self.scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+        self.scoreLabel.position = CGPointMake(50, 15);
+        [self addChild:self.scoreLabel];
+        
         //Add the fighter sprite to the scene w/ postion based on width of fighter and height of frame
         self.playerFighterJet = [SKSpriteNode spriteNodeWithImageNamed:@"fighter"];
         self.playerFighterJet.position = CGPointMake(self.playerFighterJet.size.width * 0.75, self.frame.size.height / 2);
@@ -80,14 +92,6 @@ static inline CGPoint rwNormalize(CGPoint a) {
         //Set up physics world with zero gravity
         self.physicsWorld.gravity = CGVectorMake(0,0);
         self.physicsWorld.contactDelegate = self;
-        
-        //Create and display score label
-        scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
-        scoreLabel.text = @"Score: 0";
-        scoreLabel.fontColor = [SKColor whiteColor];
-        scoreLabel.fontSize = 15;
-        scoreLabel.position = CGPointMake(50, 15);
-        [self addChild:scoreLabel];
         
         self.enemyShipsDestroyed = 0;
         
@@ -209,22 +213,6 @@ static inline CGPoint rwNormalize(CGPoint a) {
     //Add the shoot amount to the current position
     CGPoint finalDestination = rwAdd(shootOffScreen, laserBall.position);
     
-//    float angleRadians = atan2f(directionOfShot.y , directionOfShot.x);
-//    CGFloat angleDegrees = angleRadians * (180/M_PI);
-//    angleDegrees = (angleDegrees > 0.0 ? angleDegrees : (360.0 + angleDegrees));
-//    CGPoint playerPoint = self.playerFighterJet.position;
-//    
-//    CGFloat f = [self pointPairToBearingDegrees:playerPoint secondPoint:directionOfShot];
-//
-//    CGFloat angle = self.zRotation + directionOfShot.y;
-    
-//    CGFloat angle = atan2f(location.x, location.y);
-//    CGFloat angleDegrees = angle * (180/M_PI);
-//    NSLog(@"Angle: %f", angle);
-//    self.playerFighterJet.zRotation = angleDegrees;
-//    SKAction *rotatePlayer = [SKAction rotateByAngle:angle duration:0.15f];
-//    //[self.playerFighterJet runAction:rotatePlayer];
-    
     //Calculate velocity multiplier based on device type. Increased for iPad to compensate for larger screen
     float velocityMultiplier = 1.0;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
@@ -276,7 +264,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     
     //Keep track of enemy ships destroyed and update score
     self.enemyShipsDestroyed++;
-    [scoreLabel setText:[NSString stringWithFormat:@"Score: %d", self.enemyShipsDestroyed]];
+    [self.scoreLabel setText:[NSString stringWithFormat:@"Score: %d", self.enemyShipsDestroyed]];
     //Reveal game won scene once 15 ships destroyed
     if (self.enemyShipsDestroyed >= 15) {
         SKTransition *revealGameWon = [SKTransition doorsOpenVerticalWithDuration:0.5];
