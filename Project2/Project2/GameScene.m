@@ -62,6 +62,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     SKSpriteNode *laserBallNode;
     SKSpriteNode *enemyShipNode;
     int playerLives;
+    CGFloat angle;
 }
 
 -(id)initWithSize:(CGSize)size {
@@ -77,7 +78,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
         //Create and display score label
         self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
         //This line is comment out to fix odd issue with iPad running iOS 7.0.4.
-        self.scoreLabel.text = @"Score: 0";
+        //self.scoreLabel.text = @"Score: 0";
         self.scoreLabel.fontColor = [SKColor whiteColor];
         self.scoreLabel.fontSize = 15;
         self.scoreLabel.zPosition = 4;
@@ -238,6 +239,15 @@ static inline CGPoint rwNormalize(CGPoint a) {
     } else {
         NSLog(@"laserBall node NIL!");
     }
+    
+    //Get angle of shot to rotate the fighter
+    float deltaX = self.playerFighterJet.position.x - location.x;
+    float deltaY = self.playerFighterJet.position.y - location.y;
+    angle = atan2(deltaY, deltaX) + M_PI;
+    
+    SKAction *rotateFighter = [SKAction rotateToAngle:angle duration:0.1 shortestUnitArc:YES];
+    [self.playerFighterJet runAction:rotateFighter];
+    
     //Play laser fire sound
     [self runAction:laserSoundAction];
 }
