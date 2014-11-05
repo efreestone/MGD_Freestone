@@ -59,8 +59,9 @@ static inline CGPoint rwNormalize(CGPoint a) {
     //Declare sound actions to be loaded ahead of time
     SKAction *laserSoundAction;
     SKAction *hitEnemySoundAction;
-    SKSpriteNode *laserBall;
-    
+    SKSpriteNode *laserBallNode;
+    SKSpriteNode *enemyShipNode;
+    int playerLives;
 }
 
 -(id)initWithSize:(CGSize)size {
@@ -76,7 +77,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
         //Create and display score label
         self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
         //This line is comment out to fix odd issue with iPad running iOS 7.0.4.
-        //self.scoreLabel.text = @"Score: 0";
+        self.scoreLabel.text = @"Score: 0";
         self.scoreLabel.fontColor = [SKColor whiteColor];
         self.scoreLabel.fontSize = 15;
         self.scoreLabel.zPosition = 4;
@@ -98,6 +99,9 @@ static inline CGPoint rwNormalize(CGPoint a) {
         //Initiate sounds for laser fire and hitting an enemy spaceship
         laserSoundAction = [SKAction playSoundFileNamed:@"laser.caf" waitForCompletion:NO];
         hitEnemySoundAction = [SKAction playSoundFileNamed:@"explosion.caf" waitForCompletion:NO];
+        
+        //Set
+        playerLives = 3;
     }
     return self;
 }
@@ -105,24 +109,24 @@ static inline CGPoint rwNormalize(CGPoint a) {
 //Add enemy objects to the scene with random speed and spawn points (Y axis)
 -(void)addEnemyShip {
     //Create enemy sprite
-    SKSpriteNode *enemyShip = [SKSpriteNode spriteNodeWithImageNamed:@"spaceship"];
+    enemyShipNode = [SKSpriteNode spriteNodeWithImageNamed:@"spaceship"];
     //Set physics body to radius around enemy spaceship
-    enemyShip.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:enemyShip.size.width / 2];
-    enemyShip.physicsBody.dynamic = YES;
+    enemyShipNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:enemyShipNode.size.width / 2];
+    enemyShipNode.physicsBody.dynamic = YES;
     //Set category, contact and collision
-    enemyShip.physicsBody.categoryBitMask = enemyShipCategory;
-    enemyShip.physicsBody.contactTestBitMask = laserBallCategory;
-    enemyShip.physicsBody.collisionBitMask = 0; // 5
+    enemyShipNode.physicsBody.categoryBitMask = enemyShipCategory;
+    enemyShipNode.physicsBody.contactTestBitMask = laserBallCategory;
+    enemyShipNode.physicsBody.collisionBitMask = 0; // 5
     
     //Create a random Y axis to spawn enemy
-    int minimumY = enemyShip.size.height / 2;
-    int maximumY = self.frame.size.height - enemyShip.size.height / 2;
+    int minimumY = enemyShipNode.size.height / 2;
+    int maximumY = self.frame.size.height - enemyShipNode.size.height / 2;
     int rangeOfY = maximumY - minimumY;
     int actualYAxis = (arc4random() % rangeOfY) + minimumY;
     
     //Spawn enemy just passed right edge of screen w/ a random Y postion
-    enemyShip.position = CGPointMake(self.frame.size.width + enemyShip.size.width/2, actualYAxis);
-    [self addChild:enemyShip];
+    enemyShipNode.position = CGPointMake(self.frame.size.width + enemyShipNode.size.width/2, actualYAxis);
+    [self addChild:enemyShipNode];
     
     //Determine varied speed of enemies from right to left
     int minDuration = 2.0;
@@ -131,7 +135,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     int actualDuration = (arc4random() % rangeDuration) + minDuration;
     
     //Create move action from right to left and remove enemy once off screen
-    SKAction *actionMove = [SKAction moveTo:CGPointMake(-enemyShip.size.width/2, actualYAxis) duration:actualDuration];
+    SKAction *actionMove = [SKAction moveTo:CGPointMake(-enemyShipNode.size.width/2, actualYAxis) duration:actualDuration];
     SKAction *actionMoveDone = [SKAction removeFromParent];
     //[enemyShip runAction:[SKAction sequence:@[actionMove, actionMoveDone]]];
     
@@ -139,22 +143,26 @@ static inline CGPoint rwNormalize(CGPoint a) {
     SKAction * loseAction = [SKAction runBlock:^{
         SKTransition *revealGameLost = [SKTransition doorsOpenVerticalWithDuration:0.5];
         SKScene * gameLostScene = [[GameOverScene alloc] initWithSize:self.size didPlayerWin:NO];
-        [self.view presentScene:gameLostScene transition: revealGameLost];
+        playerLives = playerLives - 1;
+        NSLog(@"Missed: %d", playerLives);
+        if (playerLives == 0) {
+            [self.view presentScene:gameLostScene transition: revealGameLost];
+        }
     }];
-    [enemyShip runAction:[SKAction sequence:@[actionMove, loseAction, actionMoveDone]]];
+    [enemyShipNode runAction:[SKAction sequence:@[actionMove, loseAction, actionMoveDone]]];
 }
 
 -(void)addLaserBall {
     //Set initial location of projectile to the fighter
-    laserBall = [SKSpriteNode spriteNodeWithImageNamed:@"laser-ball"];
-    laserBall.position = self.playerFighterJet.position;
-    laserBall.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:laserBall.size.width/2];
-    laserBall.physicsBody.dynamic = YES;
+    laserBallNode = [SKSpriteNode spriteNodeWithImageNamed:@"laser-ball"];
+    laserBallNode.position = self.playerFighterJet.position;
+    laserBallNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:laserBallNode.size.width/2];
+    laserBallNode.physicsBody.dynamic = YES;
     //Set category, contact and collision
-    laserBall.physicsBody.categoryBitMask = laserBallCategory;
-    laserBall.physicsBody.contactTestBitMask = enemyShipCategory;
-    laserBall.physicsBody.collisionBitMask = 0;
-    laserBall.physicsBody.usesPreciseCollisionDetection = YES;
+    laserBallNode.physicsBody.categoryBitMask = laserBallCategory;
+    laserBallNode.physicsBody.contactTestBitMask = enemyShipCategory;
+    laserBallNode.physicsBody.collisionBitMask = 0;
+    laserBallNode.physicsBody.usesPreciseCollisionDetection = YES;
     
 }
 
@@ -195,13 +203,13 @@ static inline CGPoint rwNormalize(CGPoint a) {
     [self addLaserBall];
     
     //Determine offset of location to fighter
-    CGPoint offset = rwSub(location, laserBall.position);
+    CGPoint offset = rwSub(location, laserBallNode.position);
     
     //Make sure not shooting backwards or up/down
     if (offset.x <= 0) return;
     
     //Position has been double-checked, add laser ball sprite
-    [self addChild:laserBall];
+    [self addChild:laserBallNode];
     
     //Get the direction of where to shoot laser ball
     //rwNormalize is a unit vector of length 1
@@ -211,7 +219,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     CGPoint shootOffScreen = rwMult(directionOfShot, 1000);
     
     //Add the shoot amount to the current position
-    CGPoint finalDestination = rwAdd(shootOffScreen, laserBall.position);
+    CGPoint finalDestination = rwAdd(shootOffScreen, laserBallNode.position);
     
     //Calculate velocity multiplier based on device type. Increased for iPad to compensate for larger screen
     float velocityMultiplier = 1.0;
@@ -225,8 +233,8 @@ static inline CGPoint rwNormalize(CGPoint a) {
     SKAction *actionShoot = [SKAction moveTo:finalDestination duration:realMoveDuration];
     SKAction *actionShootDone = [SKAction removeFromParent];
     //Make sure laser ball exists
-    if (laserBall != nil) {
-        [laserBall runAction:[SKAction sequence:@[actionShoot, actionShootDone]]];
+    if (laserBallNode != nil) {
+        [laserBallNode runAction:[SKAction sequence:@[actionShoot, actionShootDone]]];
     } else {
         NSLog(@"laserBall node NIL!");
     }
