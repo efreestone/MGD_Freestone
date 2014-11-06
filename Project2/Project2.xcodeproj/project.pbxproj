@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		B81B587C1A0B1CAD002AB4A0 /* explosion.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B81B587B1A0B1CAD002AB4A0 /* explosion.atlas */; };
+		B8A10A921A0C2CFD000DE23A /* lose.caf in Resources */ = {isa = PBXBuildFile; fileRef = B8A10A8F1A0C2CFD000DE23A /* lose.caf */; };
+		B8A10A931A0C2CFD000DE23A /* miss.caf in Resources */ = {isa = PBXBuildFile; fileRef = B8A10A901A0C2CFD000DE23A /* miss.caf */; };
+		B8A10A941A0C2CFD000DE23A /* win.caf in Resources */ = {isa = PBXBuildFile; fileRef = B8A10A911A0C2CFD000DE23A /* win.caf */; };
 		B8D2A9B31A0842F300786FED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D2A9B21A0842F300786FED /* main.m */; };
 		B8D2A9B61A0842F300786FED /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D2A9B51A0842F300786FED /* AppDelegate.m */; };
 		B8D2A9B91A0842F300786FED /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D2A9B81A0842F300786FED /* GameScene.m */; };
@@ -55,6 +58,9 @@
 
 /* Begin PBXFileReference section */
 		B81B587B1A0B1CAD002AB4A0 /* explosion.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = explosion.atlas; sourceTree = "<group>"; };
+		B8A10A8F1A0C2CFD000DE23A /* lose.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lose.caf; sourceTree = "<group>"; };
+		B8A10A901A0C2CFD000DE23A /* miss.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = miss.caf; sourceTree = "<group>"; };
+		B8A10A911A0C2CFD000DE23A /* win.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = win.caf; sourceTree = "<group>"; };
 		B8D2A9AD1A0842F300786FED /* Project2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8D2A9B11A0842F300786FED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8D2A9B21A0842F300786FED /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -222,6 +228,9 @@
 		B8D2AA0A1A08459400786FED /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				B8A10A8F1A0C2CFD000DE23A /* lose.caf */,
+				B8A10A901A0C2CFD000DE23A /* miss.caf */,
+				B8A10A911A0C2CFD000DE23A /* win.caf */,
 				B8D2AA0B1A08459400786FED /* explosion.caf */,
 				B8D2AA0C1A08459400786FED /* laser.caf */,
 			);
@@ -313,7 +322,9 @@
 				B8D2AA091A08458C00786FED /* Icon@2x.png in Resources */,
 				B8D2AA0D1A08459400786FED /* explosion.caf in Resources */,
 				B8D2A9F81A08458200786FED /* space~iphone.png in Resources */,
+				B8A10A941A0C2CFD000DE23A /* win.caf in Resources */,
 				B8D2A9F71A08458200786FED /* space~ipad.png in Resources */,
+				B8A10A921A0C2CFD000DE23A /* lose.caf in Resources */,
 				B8D2AA051A08458C00786FED /* Default~iphone.png in Resources */,
 				B8DE58F61A0AD3F30031C08D /* Default-568h@2x~iphone.png in Resources */,
 				B8D2AA041A08458C00786FED /* Default~ipad.png in Resources */,
@@ -325,6 +336,7 @@
 				B8D2A9C61A0842F300786FED /* LaunchScreen.xib in Resources */,
 				B8D2A9F61A08458200786FED /* spaceship~ipad.png in Resources */,
 				B8D2A9F21A08458200786FED /* space@2x~ipad.png in Resources */,
+				B8A10A931A0C2CFD000DE23A /* miss.caf in Resources */,
 				B8D2AA021A08458C00786FED /* Default@2x~ipad.png in Resources */,
 				B8D2A9F51A08458200786FED /* spaceship.png in Resources */,
 				B8D2A9F11A08458200786FED /* red-laser.png in Resources */,

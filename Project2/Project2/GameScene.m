@@ -59,6 +59,10 @@ static inline CGPoint rwNormalize(CGPoint a) {
     //Declare sound actions to be loaded ahead of time
     SKAction *laserSoundAction;
     SKAction *hitEnemySoundAction;
+    SKAction *winGameSoundAction;
+    SKAction *loseGameSoundAction;
+    SKAction *missShipSoundAction;
+    
     SKSpriteNode *laserBallNode;
     SKSpriteNode *enemyShipNode;
     int enemyShipsDestroyed;
@@ -132,6 +136,9 @@ static inline CGPoint rwNormalize(CGPoint a) {
         //Initiate sounds for laser fire and hitting an enemy spaceship
         laserSoundAction = [SKAction playSoundFileNamed:@"laser.caf" waitForCompletion:NO];
         hitEnemySoundAction = [SKAction playSoundFileNamed:@"explosion.caf" waitForCompletion:NO];
+//        winGameSoundAction = [SKAction playSoundFileNamed:@"win.caf" waitForCompletion:NO];
+//        loseGameSoundAction = [SKAction playSoundFileNamed:@"lose.caf" waitForCompletion:NO];
+        missShipSoundAction = [SKAction playSoundFileNamed:@"miss.caf" waitForCompletion:NO];
     }
     return self;
 }
@@ -174,9 +181,13 @@ static inline CGPoint rwNormalize(CGPoint a) {
     SKAction * loseAction = [SKAction runBlock:^{
         SKTransition *revealGameLost = [SKTransition doorsOpenVerticalWithDuration:0.5];
         SKScene * gameLostScene = [[GameOverScene alloc] initWithSize:self.size didPlayerWin:NO];
+        //Play missed ship sound
+        [self runAction:missShipSoundAction];
+        //Remove life as spaceships are missed
         playerLives--;
         self.livesLabel.text = [NSString stringWithFormat:@"Lives: %d", playerLives];
-        NSLog(@"Missed: %d", playerLives);
+        //NSLog(@"Missed: %d", playerLives);
+        //3 ships missed, player lost
         if (playerLives == 0) {
             [self.view presentScene:gameLostScene transition: revealGameLost];
         }

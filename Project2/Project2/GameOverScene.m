@@ -24,11 +24,17 @@
         backgroundImage.position = CGPointMake(self.size.width / 2, self.size.height / 2);
         [self addChild:backgroundImage];
         
+        NSString *soundFileName = @"lose.caf";
+        
         //Set message based on if player won
         NSString *messageString = @"Sorry, you lost.";
         if (playerWin) {
             messageString = @"Congratulations, you won!";
+            soundFileName = @"win.caf";
         }
+        
+        //Create sound action to play win/lose sound
+        SKAction *playSoundAction = [SKAction playSoundFileNamed:soundFileName waitForCompletion:NO];
         
         CGFloat fontSize = 40;
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
@@ -51,7 +57,7 @@
             [self.view presentScene:myScene transition: reveal];
         }];
         
-        [self runAction:[SKAction sequence:@[waitDuration, revealGameScene]]];
+        [self runAction:[SKAction sequence:@[playSoundAction, waitDuration, revealGameScene]]];
     }
     return self;
     
