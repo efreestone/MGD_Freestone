@@ -24,10 +24,9 @@ static const uint32_t enemyShipCategory =  0x1 << 1;
 @property (strong, nonatomic) SKSpriteNode *playerFighterJet;
 @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
-//@property (nonatomic) int enemyShipsDestroyed;
-@property (nonatomic) int enemyShipsMissed;
 @property (strong, nonatomic) SKLabelNode *scoreLabel;
 @property (strong, nonatomic) SKLabelNode *livesLabel;
+@property (strong, nonatomic) NSMutableArray *explosionTextures;
 
 @end
 
@@ -65,10 +64,21 @@ static inline CGPoint rwNormalize(CGPoint a) {
     int enemyShipsDestroyed;
     int playerLives;
     CGFloat angle;
+    float explosionScale;
 }
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
+        
+        //Load explosion atlas
+        SKTextureAtlas *explosionTextureAtlas = [SKTextureAtlas atlasNamed:@"explosion"];
+        NSArray *textureNamesArray = [explosionTextureAtlas textureNames];
+        self.explosionTextures = [NSMutableArray new];
+        for (NSString *name in textureNamesArray) {
+            SKTexture *texture = [explosionTextureAtlas textureNamed:name];
+            [self.explosionTextures addObject:texture];
+        }
+        
         //Log out screen size
         NSLog(@"Size = %@", NSStringFromCGSize(size));
         
@@ -77,10 +87,12 @@ static inline CGPoint rwNormalize(CGPoint a) {
         backgroundImage.position = CGPointMake(self.size.width / 2, self.size.height / 2);
         [self addChild:backgroundImage];
         
-        //
+        //Set font size and adjust for ipad
         float fontSize = 15;
+        explosionScale = 0.5;
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             fontSize = 30;
+            explosionScale = 1;
         }
         
         //Create and display score label
@@ -284,15 +296,32 @@ static inline CGPoint rwNormalize(CGPoint a) {
     
     //Call remove method if physics bodies are laserBall and enemyShip
     if ((firstBody.categoryBitMask & laserBallCategory) != 0 && (secondBody.categoryBitMask & enemyShipCategory) != 0) {
+        //
         [self laserBall:(SKSpriteNode *) firstBody.node didCollideWithEnemyShip:(SKSpriteNode *) secondBody.node];
         //Play explosion sound
         [self runAction:hitEnemySoundAction];
     }
 }
 
+-(void)animatedSpaceshipExplosion {
+
+}
+
 //Remove ship and laser ball when collision detected
 -(void)laserBall:(SKSpriteNode *)passedLaserBall didCollideWithEnemyShip:(SKSpriteNode *)passedEnemyShip {
     NSLog(@"Hit");
+    
+    //Add explosion to scenen
+    SKSpriteNode *explosionNode = [SKSpriteNode spriteNodeWithTexture:[self.explosionTextures objectAtIndex:0]];
+    //explosionNode.zPosition = 1;
+    explosionNode.scale = explosionScale;
+    explosionNode.position = passedEnemyShip.position;
+    
+    [self addChild:explosionNode];
+    
+    SKAction *explosionAction = [SKAction animateWithTextures:self.explosionTextures timePerFrame:0.05];
+    SKAction *removeExplosion = [SKAction removeFromParent];
+    [explosionNode runAction:[SKAction sequence:@[explosionAction, removeExplosion]]];
     
     SKAction *delayRemove = [SKAction waitForDuration:0.0025];
     SKAction *removeSpriteNodes = [SKAction runBlock:^{
@@ -301,6 +330,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
         [passedEnemyShip removeFromParent];
     }];
     
+    //Delay removal of sprites. This is to help smooth how the removal looks
     [self runAction:[SKAction sequence:@[delayRemove, removeSpriteNodes]]];
     
     //Keep track of enemy ships destroyed and update score

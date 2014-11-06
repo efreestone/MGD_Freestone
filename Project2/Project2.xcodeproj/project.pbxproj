@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B81B587C1A0B1CAD002AB4A0 /* explosion.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B81B587B1A0B1CAD002AB4A0 /* explosion.atlas */; };
 		B8D2A9B31A0842F300786FED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D2A9B21A0842F300786FED /* main.m */; };
 		B8D2A9B61A0842F300786FED /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D2A9B51A0842F300786FED /* AppDelegate.m */; };
 		B8D2A9B91A0842F300786FED /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D2A9B81A0842F300786FED /* GameScene.m */; };
@@ -53,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B81B587B1A0B1CAD002AB4A0 /* explosion.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = explosion.atlas; sourceTree = "<group>"; };
 		B8D2A9AD1A0842F300786FED /* Project2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8D2A9B11A0842F300786FED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8D2A9B21A0842F300786FED /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 		B8D2A9DE1A08458200786FED /* art */ = {
 			isa = PBXGroup;
 			children = (
+				B81B587B1A0B1CAD002AB4A0 /* explosion.atlas */,
 				B8D2A9DF1A08458200786FED /* asteroid-1.png */,
 				B8D2A9E01A08458200786FED /* fighter.png */,
 				B8D2A9E11A08458200786FED /* fighter~ipad.png */,
@@ -332,6 +335,7 @@
 				B8D2A9C11A0842F300786FED /* Main.storyboard in Resources */,
 				B8D2A9F41A08458200786FED /* space@3x~iphone.png in Resources */,
 				B8D2A9ED1A08458200786FED /* fighter.png in Resources */,
+				B81B587C1A0B1CAD002AB4A0 /* explosion.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
