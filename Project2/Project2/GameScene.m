@@ -64,6 +64,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     int enemyShipsDestroyed;
     int playerLives;
     CGFloat angle;
+    float fontSize;
     float explosionScale;
 }
 
@@ -88,32 +89,12 @@ static inline CGPoint rwNormalize(CGPoint a) {
         [self addChild:backgroundImage];
         
         //Set font size and adjust for ipad
-        float fontSize = 15;
+        fontSize = 15;
         explosionScale = 0.5;
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             fontSize = 30;
             explosionScale = 1;
         }
-        
-        //Create and display score label
-        self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
-        //This line is comment out to fix odd issue with iPad running iOS 7.0.4.
-        //self.scoreLabel.text = @"Score: 0";
-        self.scoreLabel.fontColor = [SKColor whiteColor];
-        self.scoreLabel.fontSize = fontSize;
-        //self.scoreLabel.zPosition = 4;
-        self.scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
-        self.scoreLabel.position = CGPointMake(50, 15);
-        [self addChild:self.scoreLabel];
-        
-        self.livesLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
-        //self.livesLabel.text = @"Lives: 3";
-        self.livesLabel.fontColor = [SKColor whiteColor];
-        self.livesLabel.fontSize = fontSize;
-        self.livesLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
-        self.livesLabel.position = CGPointMake(self.size.width / 2, 15);
-        [self addChild:self.livesLabel];
-        
         
         //Add the fighter sprite to the scene w/ postion based on width of fighter and height of frame
         self.playerFighterJet = [SKSpriteNode spriteNodeWithImageNamed:@"fighter"];
@@ -128,6 +109,26 @@ static inline CGPoint rwNormalize(CGPoint a) {
         playerLives = 3;
         enemyShipsDestroyed = 0;
         
+        //Create and display score label
+        self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
+        //Fixed issue with ships not showing by setting their zPosition higher than the labels (0.0 default)
+        self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", enemyShipsDestroyed];
+        self.scoreLabel.fontColor = [SKColor whiteColor];
+        self.scoreLabel.fontSize = fontSize;
+        //self.scoreLabel.zPosition = 1;
+        self.scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+        self.scoreLabel.position = CGPointMake(50, 15);
+        [self addChild:self.scoreLabel];
+        
+        self.livesLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
+        self.livesLabel.text = [NSString stringWithFormat:@"Lives: %d", playerLives];
+        self.livesLabel.fontColor = [SKColor whiteColor];
+        self.livesLabel.fontSize = fontSize;
+        //self.livesLabel.zPosition = 1;
+        self.livesLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+        self.livesLabel.position = CGPointMake(self.size.width / 2, 15);
+        [self addChild:self.livesLabel];
+        
         //Initiate sounds for laser fire and hitting an enemy spaceship
         laserSoundAction = [SKAction playSoundFileNamed:@"laser.caf" waitForCompletion:NO];
         hitEnemySoundAction = [SKAction playSoundFileNamed:@"explosion.caf" waitForCompletion:NO];
@@ -139,6 +140,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
 -(void)addEnemyShip {
     //Create enemy sprite
     enemyShipNode = [SKSpriteNode spriteNodeWithImageNamed:@"spaceship"];
+    enemyShipNode.zPosition = 4;
     //Set physics body to radius around enemy spaceship
     enemyShipNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:enemyShipNode.size.width / 2];
     enemyShipNode.physicsBody.dynamic = YES;
@@ -185,6 +187,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
 -(void)addLaserBall {
     //Set initial location of projectile to the fighter
     laserBallNode = [SKSpriteNode spriteNodeWithImageNamed:@"laser-ball"];
+    laserBallNode.zPosition = 4;
     laserBallNode.position = self.playerFighterJet.position;
     laserBallNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:laserBallNode.size.width/2];
     laserBallNode.physicsBody.dynamic = YES;
