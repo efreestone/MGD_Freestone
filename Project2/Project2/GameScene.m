@@ -24,9 +24,10 @@ static const uint32_t enemyShipCategory =  0x1 << 1;
 @property (strong, nonatomic) SKSpriteNode *playerFighterJet;
 @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
-@property (nonatomic) int enemyShipsDestroyed;
+//@property (nonatomic) int enemyShipsDestroyed;
 @property (nonatomic) int enemyShipsMissed;
 @property (strong, nonatomic) SKLabelNode *scoreLabel;
+@property (strong, nonatomic) SKLabelNode *livesLabel;
 
 @end
 
@@ -61,6 +62,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     SKAction *hitEnemySoundAction;
     SKSpriteNode *laserBallNode;
     SKSpriteNode *enemyShipNode;
+    int enemyShipsDestroyed;
     int playerLives;
     CGFloat angle;
 }
@@ -75,16 +77,31 @@ static inline CGPoint rwNormalize(CGPoint a) {
         backgroundImage.position = CGPointMake(self.size.width / 2, self.size.height / 2);
         [self addChild:backgroundImage];
         
+        //
+        float fontSize = 15;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            fontSize = 30;
+        }
+        
         //Create and display score label
         self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
         //This line is comment out to fix odd issue with iPad running iOS 7.0.4.
         //self.scoreLabel.text = @"Score: 0";
         self.scoreLabel.fontColor = [SKColor whiteColor];
-        self.scoreLabel.fontSize = 15;
-        self.scoreLabel.zPosition = 4;
+        self.scoreLabel.fontSize = fontSize;
+        //self.scoreLabel.zPosition = 4;
         self.scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
         self.scoreLabel.position = CGPointMake(50, 15);
         [self addChild:self.scoreLabel];
+        
+        self.livesLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
+        //self.livesLabel.text = @"Lives: 3";
+        self.livesLabel.fontColor = [SKColor whiteColor];
+        self.livesLabel.fontSize = fontSize;
+        self.livesLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+        self.livesLabel.position = CGPointMake(self.size.width / 2, 15);
+        [self addChild:self.livesLabel];
+        
         
         //Add the fighter sprite to the scene w/ postion based on width of fighter and height of frame
         self.playerFighterJet = [SKSpriteNode spriteNodeWithImageNamed:@"fighter"];
@@ -95,14 +112,13 @@ static inline CGPoint rwNormalize(CGPoint a) {
         self.physicsWorld.gravity = CGVectorMake(0,0);
         self.physicsWorld.contactDelegate = self;
         
-        self.enemyShipsDestroyed = 0;
+        //Set lives and ship count
+        playerLives = 3;
+        enemyShipsDestroyed = 0;
         
         //Initiate sounds for laser fire and hitting an enemy spaceship
         laserSoundAction = [SKAction playSoundFileNamed:@"laser.caf" waitForCompletion:NO];
         hitEnemySoundAction = [SKAction playSoundFileNamed:@"explosion.caf" waitForCompletion:NO];
-        
-        //Set
-        playerLives = 3;
     }
     return self;
 }
@@ -144,7 +160,8 @@ static inline CGPoint rwNormalize(CGPoint a) {
     SKAction * loseAction = [SKAction runBlock:^{
         SKTransition *revealGameLost = [SKTransition doorsOpenVerticalWithDuration:0.5];
         SKScene * gameLostScene = [[GameOverScene alloc] initWithSize:self.size didPlayerWin:NO];
-        playerLives = playerLives - 1;
+        playerLives--;
+        self.livesLabel.text = [NSString stringWithFormat:@"Lives: %d", playerLives];
         NSLog(@"Missed: %d", playerLives);
         if (playerLives == 0) {
             [self.view presentScene:gameLostScene transition: revealGameLost];
@@ -276,15 +293,21 @@ static inline CGPoint rwNormalize(CGPoint a) {
 //Remove ship and laser ball when collision detected
 -(void)laserBall:(SKSpriteNode *)passedLaserBall didCollideWithEnemyShip:(SKSpriteNode *)passedEnemyShip {
     NSLog(@"Hit");
-    //Remove nodes that collided
-    [passedLaserBall removeFromParent];
-    [passedEnemyShip removeFromParent];
+    
+    SKAction *delayRemove = [SKAction waitForDuration:0.0025];
+    SKAction *removeSpriteNodes = [SKAction runBlock:^{
+        //Remove nodes that collided
+        [passedLaserBall removeFromParent];
+        [passedEnemyShip removeFromParent];
+    }];
+    
+    [self runAction:[SKAction sequence:@[delayRemove, removeSpriteNodes]]];
     
     //Keep track of enemy ships destroyed and update score
-    self.enemyShipsDestroyed++;
-    [self.scoreLabel setText:[NSString stringWithFormat:@"Score: %d", self.enemyShipsDestroyed]];
+    enemyShipsDestroyed++;
+    [self.scoreLabel setText:[NSString stringWithFormat:@"Score: %d", enemyShipsDestroyed]];
     //Reveal game won scene once 15 ships destroyed
-    if (self.enemyShipsDestroyed >= 15) {
+    if (enemyShipsDestroyed >= 15) {
         SKTransition *revealGameWon = [SKTransition doorsOpenVerticalWithDuration:0.5];
         SKScene *gameWonScene = [[GameOverScene alloc] initWithSize:self.size didPlayerWin:YES];
         [self.view presentScene:gameWonScene transition:revealGameWon];

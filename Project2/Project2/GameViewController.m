@@ -33,6 +33,8 @@
         GameScene *scene = [GameScene sceneWithSize:skView.bounds.size];
         scene.scaleMode = SKSceneScaleModeAspectFill;
         
+        //skView.showsPhysics = YES;
+        
         // Present the scene.
         [skView presentScene:scene];
     }
