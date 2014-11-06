@@ -19,7 +19,7 @@
 static const uint32_t laserBallCategory =  0x1 << 0;
 static const uint32_t enemyShipCategory =  0x1 << 1;
 
-//Create private interface and variable for player fighter jet
+//Create private interface and variables
 @interface GameScene () <SKPhysicsContactDelegate>
 @property (strong, nonatomic) SKSpriteNode *playerFighterJet;
 @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
@@ -315,10 +315,6 @@ static inline CGPoint rwNormalize(CGPoint a) {
         //Play explosion sound
         [self runAction:hitEnemySoundAction];
     }
-}
-
--(void)animatedSpaceshipExplosion {
-
 }
 
 //Remove ship and laser ball when collision detected
