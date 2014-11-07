@@ -117,16 +117,15 @@ static inline CGPoint rwNormalize(CGPoint a) {
         self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", enemyShipsDestroyed];
         self.scoreLabel.fontColor = [SKColor whiteColor];
         self.scoreLabel.fontSize = fontSize;
-        //self.scoreLabel.zPosition = 1;
         self.scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
         self.scoreLabel.position = CGPointMake(50, 15);
         [self addChild:self.scoreLabel];
+        
         //Create and display lives label
         self.livesLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
         self.livesLabel.text = [NSString stringWithFormat:@"Lives: %d", playerLives];
         self.livesLabel.fontColor = [SKColor whiteColor];
         self.livesLabel.fontSize = fontSize;
-        //self.livesLabel.zPosition = 1;
         self.livesLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
         self.livesLabel.position = CGPointMake(self.size.width / 2, 15);
         [self addChild:self.livesLabel];
@@ -172,7 +171,6 @@ static inline CGPoint rwNormalize(CGPoint a) {
     //Create move action from right to left and remove enemy once off screen
     SKAction *actionMove = [SKAction moveTo:CGPointMake(-enemyShipNode.size.width/2, actualYAxis) duration:actualDuration];
     SKAction *actionMoveDone = [SKAction removeFromParent];
-    //[enemyShip runAction:[SKAction sequence:@[actionMove, actionMoveDone]]];
     
     //Create loseAction with block to show Game Over Scene if an enemy get by
     SKAction * loseAction = [SKAction runBlock:^{
@@ -321,24 +319,24 @@ static inline CGPoint rwNormalize(CGPoint a) {
 -(void)laserBall:(SKSpriteNode *)passedLaserBall didCollideWithEnemyShip:(SKSpriteNode *)passedEnemyShip {
     NSLog(@"Hit");
     
-    //Add explosion to scenen
+    //Add explosion to scene
     SKSpriteNode *explosionNode = [SKSpriteNode spriteNodeWithTexture:[self.explosionTextures objectAtIndex:0]];
     explosionNode.scale = explosionScale;
     explosionNode.position = passedEnemyShip.position;
     [self addChild:explosionNode];
-    
+    //Run animation action for explosion. Plays 4 imgs in texture atlas
     SKAction *explosionAction = [SKAction animateWithTextures:self.explosionTextures timePerFrame:0.05];
     SKAction *removeExplosion = [SKAction removeFromParent];
     [explosionNode runAction:[SKAction sequence:@[explosionAction, removeExplosion]]];
     
+    //Add slight delay to removing colliding nodes.
+    //This is to smooth out removal
     SKAction *delayRemove = [SKAction waitForDuration:0.0025];
     SKAction *removeSpriteNodes = [SKAction runBlock:^{
         //Remove nodes that collided
         [passedLaserBall removeFromParent];
         [passedEnemyShip removeFromParent];
     }];
-    
-    //Delay removal of sprites. This is to help smooth how the removal looks
     [self runAction:[SKAction sequence:@[delayRemove, removeSpriteNodes]]];
     
     //Keep track of enemy ships destroyed and update score

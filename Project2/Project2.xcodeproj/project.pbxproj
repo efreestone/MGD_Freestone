@@ -191,8 +191,8 @@
 		B8D2A9DE1A08458200786FED /* art */ = {
 			isa = PBXGroup;
 			children = (
-				B81B587B1A0B1CAD002AB4A0 /* explosion.atlas */,
 				B8D2A9DF1A08458200786FED /* asteroid-1.png */,
+				B81B587B1A0B1CAD002AB4A0 /* explosion.atlas */,
 				B8D2A9E01A08458200786FED /* fighter.png */,
 				B8D2A9E11A08458200786FED /* fighter~ipad.png */,
 				B8D2A9E21A08458200786FED /* laser-ball.png */,
@@ -201,10 +201,10 @@
 				B8D2A9E51A08458200786FED /* space@2x~ipad.png */,
 				B8D2A9E61A08458200786FED /* space@2x~iphone.png */,
 				B8D2A9E71A08458200786FED /* space@3x~iphone.png */,
-				B8D2A9E81A08458200786FED /* spaceship.png */,
-				B8D2A9E91A08458200786FED /* spaceship~ipad.png */,
 				B8D2A9EA1A08458200786FED /* space~ipad.png */,
 				B8D2A9EB1A08458200786FED /* space~iphone.png */,
+				B8D2A9E81A08458200786FED /* spaceship.png */,
+				B8D2A9E91A08458200786FED /* spaceship~ipad.png */,
 			);
 			path = art;
 			sourceTree = "<group>";
@@ -228,11 +228,11 @@
 		B8D2AA0A1A08459400786FED /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				B8D2AA0B1A08459400786FED /* explosion.caf */,
+				B8D2AA0C1A08459400786FED /* laser.caf */,
 				B8A10A8F1A0C2CFD000DE23A /* lose.caf */,
 				B8A10A901A0C2CFD000DE23A /* miss.caf */,
 				B8A10A911A0C2CFD000DE23A /* win.caf */,
-				B8D2AA0B1A08459400786FED /* explosion.caf */,
-				B8D2AA0C1A08459400786FED /* laser.caf */,
 			);
 			path = sounds;
 			sourceTree = "<group>";
