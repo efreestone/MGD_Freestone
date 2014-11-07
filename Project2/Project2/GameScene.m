@@ -59,8 +59,6 @@ static inline CGPoint rwNormalize(CGPoint a) {
     //Declare sound actions to be loaded ahead of time
     SKAction *laserSoundAction;
     SKAction *hitEnemySoundAction;
-    SKAction *winGameSoundAction;
-    SKAction *loseGameSoundAction;
     SKAction *missShipSoundAction;
     
     SKSpriteNode *laserBallNode;
@@ -74,8 +72,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
-        
-        //Load explosion atlas with images in order after sort
+        //Load explosion atlas with images in order after sort via compare
         SKTextureAtlas *explosionTextureAtlas = [SKTextureAtlas atlasNamed:@"explosion"];
         NSArray *textureNamesArray = [[explosionTextureAtlas textureNames] sortedArrayUsingSelector: @selector(compare:)];
         self.explosionTextures = [NSMutableArray new];
@@ -124,7 +121,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
         self.scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
         self.scoreLabel.position = CGPointMake(50, 15);
         [self addChild:self.scoreLabel];
-        
+        //Create and display lives label
         self.livesLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
         self.livesLabel.text = [NSString stringWithFormat:@"Lives: %d", playerLives];
         self.livesLabel.fontColor = [SKColor whiteColor];
@@ -134,11 +131,10 @@ static inline CGPoint rwNormalize(CGPoint a) {
         self.livesLabel.position = CGPointMake(self.size.width / 2, 15);
         [self addChild:self.livesLabel];
         
-        //Initiate sounds for laser fire and hitting an enemy spaceship
+        //Initiate sounds for laser fire, hitting and missing an enemy spaceship
+        //Sounds for winning/losing a game are created and played on GameOverScene
         laserSoundAction = [SKAction playSoundFileNamed:@"laser.caf" waitForCompletion:NO];
         hitEnemySoundAction = [SKAction playSoundFileNamed:@"explosion.caf" waitForCompletion:NO];
-//        winGameSoundAction = [SKAction playSoundFileNamed:@"win.caf" waitForCompletion:NO];
-//        loseGameSoundAction = [SKAction playSoundFileNamed:@"lose.caf" waitForCompletion:NO];
         missShipSoundAction = [SKAction playSoundFileNamed:@"miss.caf" waitForCompletion:NO];
     }
     return self;
@@ -184,16 +180,20 @@ static inline CGPoint rwNormalize(CGPoint a) {
         SKScene * gameLostScene = [[GameOverScene alloc] initWithSize:self.size didPlayerWin:NO];
         //Play missed ship sound
         [self runAction:missShipSoundAction];
-        //Remove life as spaceships are missed
+        //Remove lives as spaceships are missed
         playerLives--;
         self.livesLabel.text = [NSString stringWithFormat:@"Lives: %d", playerLives];
-        //NSLog(@"Missed: %d", playerLives);
         //3 ships missed, player lost
         if (playerLives == 0) {
             [self.view presentScene:gameLostScene transition: revealGameLost];
         }
     }];
-    [enemyShipNode runAction:[SKAction sequence:@[actionMove, loseAction, actionMoveDone]]];
+    //Make sure spaceship exists
+    if (enemyShipNode != nil) {
+        [enemyShipNode runAction:[SKAction sequence:@[actionMove, loseAction, actionMoveDone]]];
+    } else {
+        NSLog(@"enemyShipNode NIL!");
+    }
 }
 
 -(void)addLaserBall {
@@ -281,14 +281,14 @@ static inline CGPoint rwNormalize(CGPoint a) {
     if (laserBallNode != nil) {
         [laserBallNode runAction:[SKAction sequence:@[actionShoot, actionShootDone]]];
     } else {
-        NSLog(@"laserBall node NIL!");
+        NSLog(@"laserBallNode NIL!");
     }
     
-    //Get angle of shot to rotate the fighter
+    //Get angle of shot and rotate fighter accordingly
     float deltaX = self.playerFighterJet.position.x - location.x;
     float deltaY = self.playerFighterJet.position.y - location.y;
+    //Adding pi rotates the fight 180 to point the correct direction.
     angle = atan2(deltaY, deltaX) + M_PI;
-    
     SKAction *rotateFighter = [SKAction rotateToAngle:angle duration:0.1 shortestUnitArc:YES];
     [self.playerFighterJet runAction:rotateFighter];
     
@@ -311,8 +311,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     
     //Call remove method if physics bodies are laserBall and enemyShip
     if ((firstBody.categoryBitMask & laserBallCategory) != 0 && (secondBody.categoryBitMask & enemyShipCategory) != 0) {
-        //
-        [self laserBall:(SKSpriteNode *) firstBody.node didCollideWithEnemyShip:(SKSpriteNode *) secondBody.node];
+        [self laserBall:(SKSpriteNode *)firstBody.node didCollideWithEnemyShip:(SKSpriteNode *)secondBody.node];
         //Play explosion sound
         [self runAction:hitEnemySoundAction];
     }
@@ -324,10 +323,8 @@ static inline CGPoint rwNormalize(CGPoint a) {
     
     //Add explosion to scenen
     SKSpriteNode *explosionNode = [SKSpriteNode spriteNodeWithTexture:[self.explosionTextures objectAtIndex:0]];
-    //explosionNode.zPosition = 1;
     explosionNode.scale = explosionScale;
     explosionNode.position = passedEnemyShip.position;
-    
     [self addChild:explosionNode];
     
     SKAction *explosionAction = [SKAction animateWithTextures:self.explosionTextures timePerFrame:0.05];
