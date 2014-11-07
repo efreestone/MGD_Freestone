@@ -75,10 +75,11 @@ static inline CGPoint rwNormalize(CGPoint a) {
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         
-        //Load explosion atlas
+        //Load explosion atlas with images in order after sort
         SKTextureAtlas *explosionTextureAtlas = [SKTextureAtlas atlasNamed:@"explosion"];
-        NSArray *textureNamesArray = [explosionTextureAtlas textureNames];
+        NSArray *textureNamesArray = [[explosionTextureAtlas textureNames] sortedArrayUsingSelector: @selector(compare:)];
         self.explosionTextures = [NSMutableArray new];
+        
         for (NSString *name in textureNamesArray) {
             SKTexture *texture = [explosionTextureAtlas textureNamed:name];
             [self.explosionTextures addObject:texture];
