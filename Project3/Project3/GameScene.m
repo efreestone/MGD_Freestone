@@ -63,11 +63,14 @@ static inline CGPoint rwNormalize(CGPoint a) {
     
     SKSpriteNode *laserBallNode;
     SKSpriteNode *enemyShipNode;
+    SKSpriteNode *flashBackground;
     int enemyShipsDestroyed;
     int playerLives;
     CGFloat angle;
     float fontSize;
     float explosionScale;
+    BOOL isPaused;
+    BOOL isFlashing;
 }
 
 -(id)initWithSize:(CGSize)size {
@@ -84,11 +87,20 @@ static inline CGPoint rwNormalize(CGPoint a) {
         
         //Log out screen size
         NSLog(@"Size = %@", NSStringFromCGSize(size));
+        //Grab screen size
+        CGFloat screenWidth = self.size.width;
+        CGFloat screenHeight = self.size.height;
         
         //Set background image. It looks like SpriteKit automatically uses the correct asset for the device type.
         SKSpriteNode *backgroundImage = [SKSpriteNode spriteNodeWithImageNamed:@"space"];
-        backgroundImage.position = CGPointMake(self.size.width / 2, self.size.height / 2);
+        backgroundImage.position = CGPointMake(screenWidth / 2, screenHeight / 2);
         [self addChild:backgroundImage];
+        
+        //Instantiate flash background triggered when a spaceship is missed
+        flashBackground = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:CGSizeMake(screenWidth, screenHeight)];
+        flashBackground.zPosition = 10;
+        flashBackground.alpha = 0.5f;
+        flashBackground.position = CGPointMake(self.size.width / 2, self.size.height / 2);
         
         //Set font size and adjust for ipad
         fontSize = 15;
@@ -100,7 +112,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
         
         //Add the fighter sprite to the scene w/ postion based on width of fighter and height of frame
         self.playerFighterJet = [SKSpriteNode spriteNodeWithImageNamed:@"fighter"];
-        self.playerFighterJet.position = CGPointMake(self.playerFighterJet.size.width * 0.75, self.frame.size.height / 2);
+        self.playerFighterJet.position = CGPointMake(self.playerFighterJet.size.width * 0.75, screenHeight / 2);
         [self addChild:self.playerFighterJet];
         
         //Set up physics world with zero gravity
@@ -172,12 +184,26 @@ static inline CGPoint rwNormalize(CGPoint a) {
     SKAction *actionMove = [SKAction moveTo:CGPointMake(-enemyShipNode.size.width/2, actualYAxis) duration:actualDuration];
     SKAction *actionMoveDone = [SKAction removeFromParent];
     
+    //Create actions for flashing screen
+    SKAction *flashDelay = [SKAction waitForDuration:0.025];
+    SKAction *removeFlashBackground = [SKAction runBlock:^{
+        [flashBackground removeFromParent];
+        isFlashing = NO;
+    }];
+    
     //Create loseAction with block to show Game Over Scene if an enemy get by
     SKAction * loseAction = [SKAction runBlock:^{
         SKTransition *revealGameLost = [SKTransition doorsOpenVerticalWithDuration:0.5];
         SKScene * gameLostScene = [[GameOverScene alloc] initWithSize:self.size didPlayerWin:NO];
         //Play missed ship sound
         [self runAction:missShipSoundAction];
+        //Add and remove flashing background
+        if (!isFlashing) {
+            [self addChild:flashBackground];
+            isFlashing = YES;
+            [self runAction:[SKAction sequence:@[flashDelay, removeFlashBackground]]];
+        }
+        
         //Remove lives as spaceships are missed
         playerLives--;
         self.livesLabel.text = [NSString stringWithFormat:@"Lives: %d", playerLives];
@@ -221,18 +247,19 @@ static inline CGPoint rwNormalize(CGPoint a) {
 //Called by SpriteKit every frame. Checks last update time which in turn spawns enemies.
 //This is from Apple's Adventure sample and includes logic to avoid odd behaviour if a large amount of time has passed.
 - (void)update:(NSTimeInterval)currentTime {
-    // Handle time delta.
-    // If we drop below 60fps, we still want everything to move the same distance.
-    CFTimeInterval timeSinceUpdate = currentTime - self.lastUpdateTimeInterval;
-    self.lastUpdateTimeInterval = currentTime;
-    if (timeSinceUpdate > 1) { // more than a second since last update
-        timeSinceUpdate = 1.0 / 60.0;
+    if (!isPaused) {
+        // Handle time delta.
+        // If we drop below 60fps, we still want everything to move the same distance.
+        CFTimeInterval timeSinceUpdate = currentTime - self.lastUpdateTimeInterval;
         self.lastUpdateTimeInterval = currentTime;
+        if (timeSinceUpdate > 1) { // more than a second since last update
+            timeSinceUpdate = 1.0 / 60.0;
+            self.lastUpdateTimeInterval = currentTime;
+        }
+        
+        //Check time since last update and spawn accordingly
+        [self timeSinceLastSpawn:timeSinceUpdate];
     }
-    
-    //Check time since last update and spawn accordingly
-    [self timeSinceLastSpawn:timeSinceUpdate];
-    
 }
 
 //Grab touch event and calculate trajectory of projectile.
@@ -323,6 +350,8 @@ static inline CGPoint rwNormalize(CGPoint a) {
     SKSpriteNode *explosionNode = [SKSpriteNode spriteNodeWithTexture:[self.explosionTextures objectAtIndex:0]];
     explosionNode.scale = explosionScale;
     explosionNode.position = passedEnemyShip.position;
+    //Set zPosition to put explosion in front of spaceship
+    explosionNode.zPosition = 5.0;
     [self addChild:explosionNode];
     //Run animation action for explosion. Plays 4 imgs in texture atlas
     SKAction *explosionAction = [SKAction animateWithTextures:self.explosionTextures timePerFrame:0.05];
@@ -330,7 +359,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     [explosionNode runAction:[SKAction sequence:@[explosionAction, removeExplosion]]];
     
     //Add slight delay to removing colliding nodes.
-    //This is to smooth out removal
+    //This is to smooth out removal coinciding with explosion animation
     SKAction *delayRemove = [SKAction waitForDuration:0.0025];
     SKAction *removeSpriteNodes = [SKAction runBlock:^{
         //Remove nodes that collided
@@ -348,6 +377,37 @@ static inline CGPoint rwNormalize(CGPoint a) {
         SKScene *gameWonScene = [[GameOverScene alloc] initWithSize:self.size didPlayerWin:YES];
         [self.view presentScene:gameWonScene transition:revealGameWon];
     }
+    
+    //Pause test
+    if (enemyShipsDestroyed == 3) {
+        [self pauseGame];
+        
+        SKAction *pauseTimer = [SKAction waitForDuration:1.0];
+        SKAction *unPauseGame = [SKAction runBlock:^{
+            self.lastUpdateTimeInterval = 0;
+            [self unpauseGame];
+            
+        }];
+        
+        [self runAction:[SKAction sequence:@[pauseTimer, unPauseGame]]];
+        
+        self.lastUpdateTimeInterval = 0;
+        [NSTimer scheduledTimerWithTimeInterval:2.0
+                                         target:self
+                                       selector:@selector(unpauseGame)
+                                       userInfo:nil
+                                        repeats:NO];
+    }
+}
+
+//Pause and unpause game
+-(void)pauseGame {
+    isPaused = YES;
+    self.paused = YES;
+}
+-(void)unpauseGame {
+    isPaused = NO;
+    self.paused = NO;
 }
 
 @end
