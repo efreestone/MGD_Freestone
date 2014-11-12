@@ -104,6 +104,8 @@ static inline CGPoint rwNormalize(CGPoint a) {
         flashBackground.zPosition = 10;
         flashBackground.alpha = 0.5f;
         flashBackground.position = CGPointMake(self.size.width / 2, self.size.height / 2);
+        flashBackground.hidden = YES;
+        [self addChild:flashBackground];
         
         //Set font size and adjust for ipad
         fontSize = 15;
@@ -135,7 +137,8 @@ static inline CGPoint rwNormalize(CGPoint a) {
         self.scoreLabel.fontColor = [SKColor whiteColor];
         self.scoreLabel.fontSize = fontSize;
         self.scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
-        self.scoreLabel.position = CGPointMake(fontSize, screenHeight - labelGapFromFont);
+        float scoreLabelWidthPlus = self.scoreLabel.frame.size.width + fontSize;
+        self.scoreLabel.position = CGPointMake(screenWidth - scoreLabelWidthPlus, screenHeight - labelGapFromFont);
         [self addChild:self.scoreLabel];
         
         //Create and display lives label
@@ -149,16 +152,15 @@ static inline CGPoint rwNormalize(CGPoint a) {
         [self addChild:self.livesLabel];
         
         //Create pause button
-        pauseString = @"Pause Game";
-        resumeString = @"Resume Game";
+        pauseString = @"Pause";
+        resumeString = @"Resume";
         self.pauseLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
         self.pauseLabel.text = pauseString;
         self.pauseLabel.name = @"pauseLabel";
         self.pauseLabel.fontColor = [SKColor whiteColor];
         self.pauseLabel.fontSize = fontSize;
         self.pauseLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
-        float pauseLabelWidthPlus = self.pauseLabel.frame.size.width + fontSize;
-        self.pauseLabel.position = CGPointMake(screenWidth - pauseLabelWidthPlus, screenHeight - labelGapFromFont);
+        self.pauseLabel.position = CGPointMake(fontSize, screenHeight - labelGapFromFont);
         [self addChild:self.pauseLabel];
         
         //Initiate sounds for laser fire, hitting and missing an enemy spaceship
@@ -206,7 +208,8 @@ static inline CGPoint rwNormalize(CGPoint a) {
     //Create actions for flashing screen
     SKAction *flashDelay = [SKAction waitForDuration:0.025];
     SKAction *removeFlashBackground = [SKAction runBlock:^{
-        [flashBackground removeFromParent];
+        flashBackground.hidden = YES;
+        //[flashBackground removeFromParent];
         isFlashing = NO;
     }];
     
@@ -218,7 +221,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
         [self runAction:missShipSoundAction];
         //Add and remove flashing background
         if (!isFlashing) {
-            [self addChild:flashBackground];
+            flashBackground.hidden = NO;
             isFlashing = YES;
             [self runAction:[SKAction sequence:@[flashDelay, removeFlashBackground]]];
         }
