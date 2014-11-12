@@ -26,6 +26,7 @@ static const uint32_t enemyShipCategory =  0x1 << 1;
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
 @property (strong, nonatomic) SKLabelNode *scoreLabel;
 @property (strong, nonatomic) SKLabelNode *livesLabel;
+@property (strong, nonatomic) SKLabelNode *pauseLabel;
 @property (strong, nonatomic) NSMutableArray *explosionTextures;
 
 @end
@@ -71,6 +72,8 @@ static inline CGPoint rwNormalize(CGPoint a) {
     float explosionScale;
     BOOL isPaused;
     BOOL isFlashing;
+    NSString *pauseString;
+    NSString *resumeString;
 }
 
 -(id)initWithSize:(CGSize)size {
@@ -123,6 +126,8 @@ static inline CGPoint rwNormalize(CGPoint a) {
         playerLives = 3;
         enemyShipsDestroyed = 0;
         
+        float labelGapFromFont = fontSize * 1.5;
+        
         //Create and display score label
         self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
         //Fixed issue with ships not showing by setting their zPosition higher than the labels (0.0 default)
@@ -130,7 +135,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
         self.scoreLabel.fontColor = [SKColor whiteColor];
         self.scoreLabel.fontSize = fontSize;
         self.scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
-        self.scoreLabel.position = CGPointMake(50, 15);
+        self.scoreLabel.position = CGPointMake(fontSize, screenHeight - labelGapFromFont);
         [self addChild:self.scoreLabel];
         
         //Create and display lives label
@@ -139,8 +144,22 @@ static inline CGPoint rwNormalize(CGPoint a) {
         self.livesLabel.fontColor = [SKColor whiteColor];
         self.livesLabel.fontSize = fontSize;
         self.livesLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
-        self.livesLabel.position = CGPointMake(self.size.width / 2, 15);
+        float livesLabelWidthHalf = self.livesLabel.frame.size.width / 2;
+        self.livesLabel.position = CGPointMake((screenWidth / 2) - livesLabelWidthHalf, screenHeight - labelGapFromFont);
         [self addChild:self.livesLabel];
+        
+        //Create pause button
+        pauseString = @"Pause Game";
+        resumeString = @"Resume Game";
+        self.pauseLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
+        self.pauseLabel.text = pauseString;
+        self.pauseLabel.name = @"pauseLabel";
+        self.pauseLabel.fontColor = [SKColor whiteColor];
+        self.pauseLabel.fontSize = fontSize;
+        self.pauseLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+        float pauseLabelWidthPlus = self.pauseLabel.frame.size.width + fontSize;
+        self.pauseLabel.position = CGPointMake(screenWidth - pauseLabelWidthPlus, screenHeight - labelGapFromFont);
+        [self addChild:self.pauseLabel];
         
         //Initiate sounds for laser fire, hitting and missing an enemy spaceship
         //Sounds for winning/losing a game are created and played on GameOverScene
@@ -269,6 +288,13 @@ static inline CGPoint rwNormalize(CGPoint a) {
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     
+    //Pause Button
+    SKNode *touchedLabel = [self nodeAtPoint:location];
+    if ([touchedLabel.name isEqual: @"pauseLabel"]) {
+        [self pauseButtonPressed];
+        return;
+    }
+    
     //Call method to add laser ball
     [self addLaserBall];
     
@@ -297,28 +323,42 @@ static inline CGPoint rwNormalize(CGPoint a) {
         velocityMultiplier = 2.5;
     }
     
+    //Get angle of shot and rotate fighter accordingly
+    float deltaX = self.playerFighterJet.position.x - location.x;
+    float deltaY = self.playerFighterJet.position.y - location.y;
+    //Adding pi rotates the fighter 180 to point the correct direction.
+    angle = atan2(deltaY, deltaX) + M_PI;
+    SKAction *rotateFighter = [SKAction rotateToAngle:angle duration:0.1 shortestUnitArc:YES];
+    
     //Set velocity and create actions for the laser ball
     float velocity = 400.0 * velocityMultiplier;
     float realMoveDuration = self.size.width / velocity;
     SKAction *actionShoot = [SKAction moveTo:finalDestination duration:realMoveDuration];
     SKAction *actionShootDone = [SKAction removeFromParent];
-    //Make sure laser ball exists
-    if (laserBallNode != nil) {
-        [laserBallNode runAction:[SKAction sequence:@[actionShoot, actionShootDone]]];
+    
+    //Rotate fighter and fire once action is done
+    [self.playerFighterJet runAction:rotateFighter completion:^{
+        //Make sure laser ball exists
+        if (laserBallNode != nil) {
+            //Play laser fire sound
+            [self runAction:laserSoundAction];
+            [laserBallNode runAction:[SKAction sequence:@[actionShoot, actionShootDone]]];
+        } else {
+            NSLog(@"laserBallNode NIL!");
+        }
+    }];
+}
+
+-(void)pauseButtonPressed {
+    if (!isPaused) {
+        self.pauseLabel.text = resumeString;
+        isPaused = YES;
+        self.paused = YES;
     } else {
-        NSLog(@"laserBallNode NIL!");
+        self.pauseLabel.text = pauseString;
+        isPaused = NO;
+        self.paused = NO;
     }
-    
-    //Get angle of shot and rotate fighter accordingly
-    float deltaX = self.playerFighterJet.position.x - location.x;
-    float deltaY = self.playerFighterJet.position.y - location.y;
-    //Adding pi rotates the fight 180 to point the correct direction.
-    angle = atan2(deltaY, deltaX) + M_PI;
-    SKAction *rotateFighter = [SKAction rotateToAngle:angle duration:0.1 shortestUnitArc:YES];
-    [self.playerFighterJet runAction:rotateFighter];
-    
-    //Play laser fire sound
-    [self runAction:laserSoundAction];
 }
 
 //Contact delegate method. Triggers removal method when collision is detected
@@ -400,14 +440,14 @@ static inline CGPoint rwNormalize(CGPoint a) {
     }
 }
 
+
+
 //Pause and unpause game
 -(void)pauseGame {
-    isPaused = YES;
-    self.paused = YES;
+    
 }
 -(void)unpauseGame {
-    isPaused = NO;
-    self.paused = NO;
+    
 }
 
 @end
