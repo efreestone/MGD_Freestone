@@ -19,7 +19,6 @@
     SKAction *revealGameScene;
     SKAction *changeLabelColor;
     SKColor *iOSBlueButtonColor;
-    //SKLabelNode *playAgainLabel;
 }
 
 //Use custom init to pass in playerWin bool and change display accordingly
@@ -47,6 +46,7 @@
         SKAction *playSoundAction = [SKAction playSoundFileNamed:soundFileName waitForCompletion:NO];
         [self runAction:playSoundAction];
         
+        //Adjust font size based on device
         CGFloat fontSize = 40;
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             fontSize = 75;
@@ -60,6 +60,8 @@
         messageLabel.position = CGPointMake(self.size.width / 2, self.size.height * 0.6);
         [self addChild:messageLabel];
         
+        //Create play again label which will act as a button to restart game
+        //Decalred as a property in H
         self.playAgainLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
         self.playAgainLabel.text = @"Try again?";
         self.playAgainLabel.name = @"playAgainLabel";
@@ -87,6 +89,7 @@
     
 }
 
+//Touch started. Change text color if touch is Retry label to simulate active state of a button
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
@@ -99,6 +102,7 @@
     }
 }
 
+//Touch end. Restart game if touch is retry label
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];

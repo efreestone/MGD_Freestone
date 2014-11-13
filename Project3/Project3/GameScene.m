@@ -157,6 +157,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
         [self addChild:self.pauseLabel];
         
         //Instantiate flash background triggered when a spaceship is missed
+        //This seems to work fine on devices but still causes occasional delays in the sim
         flashBackground = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:CGSizeMake(screenWidth, screenHeight)];
         flashBackground.zPosition = 2;
         flashBackground.alpha = 0.5f;
@@ -210,7 +211,6 @@ static inline CGPoint rwNormalize(CGPoint a) {
     SKAction *flashDelay = [SKAction waitForDuration:0.025];
     SKAction *removeFlashBackground = [SKAction runBlock:^{
         flashBackground.hidden = YES;
-        //[flashBackground removeFromParent];
         isFlashing = NO;
     }];
     
@@ -344,13 +344,14 @@ static inline CGPoint rwNormalize(CGPoint a) {
     //Rotate fighter and fire once action is done
     [self.playerFighterJet runAction:rotateFighter completion:^{
         //Make sure laser ball exists
-        //if (laserBallNode != nil) {
+        if (laserBallNode != nil) {
             //Play laser fire sound
-            [self runAction:laserSoundAction];
+            
             [laserBallNode runAction:[SKAction sequence:@[actionShoot, actionShootDone]]];
-        //} else {
-            //NSLog(@"laserBallNode NIL!");
-        //}
+            [self runAction:laserSoundAction];
+        } else {
+            NSLog(@"laserBallNode NIL!");
+        }
     }];
 }
 
@@ -423,37 +424,6 @@ static inline CGPoint rwNormalize(CGPoint a) {
         SKScene *gameWonScene = [[GameOverScene alloc] initWithSize:self.size didPlayerWin:YES];
         [self.view presentScene:gameWonScene transition:revealGameWon];
     }
-    
-    //Pause test
-    if (enemyShipsDestroyed == 3) {
-        [self pauseGame];
-        
-        SKAction *pauseTimer = [SKAction waitForDuration:1.0];
-        SKAction *unPauseGame = [SKAction runBlock:^{
-            self.lastUpdateTimeInterval = 0;
-            [self unpauseGame];
-            
-        }];
-        
-        [self runAction:[SKAction sequence:@[pauseTimer, unPauseGame]]];
-        
-        self.lastUpdateTimeInterval = 0;
-        [NSTimer scheduledTimerWithTimeInterval:2.0
-                                         target:self
-                                       selector:@selector(unpauseGame)
-                                       userInfo:nil
-                                        repeats:NO];
-    }
-}
-
-
-
-//Pause and unpause game
--(void)pauseGame {
-    
-}
--(void)unpauseGame {
-    
 }
 
 @end

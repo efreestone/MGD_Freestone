@@ -18,6 +18,7 @@
 //Create custom init to pass in playerWin bool and change display accordingly
 -(id)initWithSize:(CGSize)size didPlayerWin:(BOOL)playerWin;
 
+//Declare play again label which will act as a button
 @property (strong, nonatomic) SKLabelNode *playAgainLabel;
 
 @end
