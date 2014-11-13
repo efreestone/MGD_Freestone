@@ -99,14 +99,6 @@ static inline CGPoint rwNormalize(CGPoint a) {
         backgroundImage.position = CGPointMake(screenWidth / 2, screenHeight / 2);
         [self addChild:backgroundImage];
         
-        //Instantiate flash background triggered when a spaceship is missed
-        flashBackground = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:CGSizeMake(screenWidth, screenHeight)];
-        flashBackground.zPosition = 10;
-        flashBackground.alpha = 0.5f;
-        flashBackground.position = CGPointMake(self.size.width / 2, self.size.height / 2);
-        flashBackground.hidden = YES;
-        [self addChild:flashBackground];
-        
         //Set font size and adjust for ipad
         fontSize = 15;
         explosionScale = 0.5;
@@ -152,16 +144,25 @@ static inline CGPoint rwNormalize(CGPoint a) {
         [self addChild:self.livesLabel];
         
         //Create pause button
-        pauseString = @"Pause";
-        resumeString = @"Resume";
+        pauseString = @"Pause Game";
+        resumeString = @"Resume Game";
         self.pauseLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
         self.pauseLabel.text = pauseString;
         self.pauseLabel.name = @"pauseLabel";
         self.pauseLabel.fontColor = [SKColor whiteColor];
+        self.pauseLabel.zPosition = 3;
         self.pauseLabel.fontSize = fontSize;
         self.pauseLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
         self.pauseLabel.position = CGPointMake(fontSize, screenHeight - labelGapFromFont);
         [self addChild:self.pauseLabel];
+        
+        //Instantiate flash background triggered when a spaceship is missed
+        flashBackground = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:CGSizeMake(screenWidth, screenHeight)];
+        flashBackground.zPosition = 2;
+        flashBackground.alpha = 0.5f;
+        flashBackground.position = CGPointMake(self.size.width / 2, self.size.height / 2);
+        flashBackground.hidden = YES;
+        [self addChild:flashBackground];
         
         //Initiate sounds for laser fire, hitting and missing an enemy spaceship
         //Sounds for winning/losing a game are created and played on GameOverScene
@@ -219,7 +220,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
         SKScene * gameLostScene = [[GameOverScene alloc] initWithSize:self.size didPlayerWin:NO];
         //Play missed ship sound
         [self runAction:missShipSoundAction];
-        //Add and remove flashing background
+        //Show and hide flashing background
         if (!isFlashing) {
             flashBackground.hidden = NO;
             isFlashing = YES;
@@ -294,6 +295,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     //Pause Button
     SKNode *touchedLabel = [self nodeAtPoint:location];
     if ([touchedLabel.name isEqual: @"pauseLabel"]) {
+        NSLog(@"pause");
         [self pauseButtonPressed];
         return;
     }
@@ -302,7 +304,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
     [self addLaserBall];
     
     //Determine offset of location to fighter
-    CGPoint offset = rwSub(location, laserBallNode.position);
+    CGPoint offset = rwSub(location, self.playerFighterJet.position); //laserBallNode.position
     
     //Make sure not shooting backwards or up/down
     if (offset.x <= 0) return;
@@ -342,16 +344,17 @@ static inline CGPoint rwNormalize(CGPoint a) {
     //Rotate fighter and fire once action is done
     [self.playerFighterJet runAction:rotateFighter completion:^{
         //Make sure laser ball exists
-        if (laserBallNode != nil) {
+        //if (laserBallNode != nil) {
             //Play laser fire sound
             [self runAction:laserSoundAction];
             [laserBallNode runAction:[SKAction sequence:@[actionShoot, actionShootDone]]];
-        } else {
-            NSLog(@"laserBallNode NIL!");
-        }
+        //} else {
+            //NSLog(@"laserBallNode NIL!");
+        //}
     }];
 }
 
+//Handle pausing and resuming the game. Triggered by touching pause label
 -(void)pauseButtonPressed {
     if (!isPaused) {
         self.pauseLabel.text = resumeString;
