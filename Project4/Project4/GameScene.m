@@ -300,59 +300,61 @@ static inline CGPoint rwNormalize(CGPoint a) {
         return;
     }
     
-    //Call method to add laser ball
-    [self addLaserBall];
-    
-    //Determine offset of location to fighter
-    CGPoint offset = rwSub(location, self.playerFighterJet.position); //laserBallNode.position
-    
-    //Make sure not shooting backwards or up/down
-    if (offset.x <= 0) return;
-    
-    //Position has been double-checked, add laser ball sprite
-    [self addChild:laserBallNode];
-    
-    //Get the direction of where to shoot laser ball
-    //rwNormalize is a unit vector of length 1
-    CGPoint directionOfShot = rwNormalize(offset);
-    
-    //Shoot far enough for the laser ball to leave the screen
-    CGPoint shootOffScreen = rwMult(directionOfShot, 1000);
-    
-    //Add the shoot amount to the current position
-    CGPoint finalDestination = rwAdd(shootOffScreen, laserBallNode.position);
-    
-    //Calculate velocity multiplier based on device type. Increased for iPad to compensate for larger screen
-    float velocityMultiplier = 1.0;
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        velocityMultiplier = 2.5;
-    }
-    
-    //Get angle of shot and rotate fighter accordingly
-    float deltaX = self.playerFighterJet.position.x - location.x;
-    float deltaY = self.playerFighterJet.position.y - location.y;
-    //Adding pi rotates the fighter 180 to point the correct direction.
-    angle = atan2(deltaY, deltaX) + M_PI;
-    SKAction *rotateFighter = [SKAction rotateToAngle:angle duration:0.1 shortestUnitArc:YES];
-    
-    //Set velocity and create actions for the laser ball
-    float velocity = 400.0 * velocityMultiplier;
-    float realMoveDuration = self.size.width / velocity;
-    SKAction *actionShoot = [SKAction moveTo:finalDestination duration:realMoveDuration];
-    SKAction *actionShootDone = [SKAction removeFromParent];
-    
-    //Rotate fighter and fire once action is done
-    [self.playerFighterJet runAction:rotateFighter completion:^{
-        //Make sure laser ball exists
-        if (laserBallNode != nil) {
-            //Play laser fire sound
-            
-            [laserBallNode runAction:[SKAction sequence:@[actionShoot, actionShootDone]]];
-            [self runAction:laserSoundAction];
-        } else {
-            NSLog(@"laserBallNode NIL!");
+    if (!isPaused) {
+        //Call method to add laser ball
+        [self addLaserBall];
+        
+        //Determine offset of location to fighter
+        CGPoint offset = rwSub(location, self.playerFighterJet.position); //laserBallNode.position
+        
+        //Make sure not shooting backwards or up/down
+        if (offset.x <= 0) return;
+        
+        //Position has been double-checked, add laser ball sprite
+        [self addChild:laserBallNode];
+        
+        //Get the direction of where to shoot laser ball
+        //rwNormalize is a unit vector of length 1
+        CGPoint directionOfShot = rwNormalize(offset);
+        
+        //Shoot far enough for the laser ball to leave the screen
+        CGPoint shootOffScreen = rwMult(directionOfShot, 1000);
+        
+        //Add the shoot amount to the current position
+        CGPoint finalDestination = rwAdd(shootOffScreen, laserBallNode.position);
+        
+        //Calculate velocity multiplier based on device type. Increased for iPad to compensate for larger screen
+        float velocityMultiplier = 1.0;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            velocityMultiplier = 2.5;
         }
-    }];
+        
+        //Get angle of shot and rotate fighter accordingly
+        float deltaX = self.playerFighterJet.position.x - location.x;
+        float deltaY = self.playerFighterJet.position.y - location.y;
+        //Adding pi rotates the fighter 180 to point the correct direction.
+        angle = atan2(deltaY, deltaX) + M_PI;
+        SKAction *rotateFighter = [SKAction rotateToAngle:angle duration:0.1 shortestUnitArc:YES];
+        
+        //Set velocity and create actions for the laser ball
+        float velocity = 400.0 * velocityMultiplier;
+        float realMoveDuration = self.size.width / velocity;
+        SKAction *actionShoot = [SKAction moveTo:finalDestination duration:realMoveDuration];
+        SKAction *actionShootDone = [SKAction removeFromParent];
+        
+        //Rotate fighter and fire once action is done
+        [self.playerFighterJet runAction:rotateFighter completion:^{
+            //Make sure laser ball exists
+            if (laserBallNode != nil) {
+                //Play laser fire sound
+                
+                [laserBallNode runAction:[SKAction sequence:@[actionShoot, actionShootDone]]];
+                [self runAction:laserSoundAction];
+            } else {
+                NSLog(@"laserBallNode NIL!");
+            }
+        }];
+    }
 }
 
 //Handle pausing and resuming the game. Triggered by touching pause label
