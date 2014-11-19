@@ -13,8 +13,14 @@
 
 #import "GameViewController.h"
 #import "GameScene.h"
+#import "MainMenuScene.h"
 
 @implementation GameViewController
+
+-(void)viewDidLoad {
+    
+    [super viewDidLoad];
+}
 
 //Move scene creation from viewDidLoad to insure view is created
 -(void)viewWillLayoutSubviews {
@@ -29,10 +35,13 @@
         skView.ignoresSiblingOrder = YES;
         
         // Create and configure the scene.
-        GameScene *scene = [GameScene sceneWithSize:skView.bounds.size];
+        MainMenuScene *scene = [MainMenuScene sceneWithSize:skView.bounds.size];
         scene.scaleMode = SKSceneScaleModeAspectFill;
         
         //skView.showsPhysics = YES;
+        
+//        BOOL firstLoad = [[NSUserDefaults standardUserDefaults] boolForKey:@"isFirstLaunch"];
+//        NSLog(@"First Load: %d", firstLoad);
         
         // Present the scene.
         [skView presentScene:scene];

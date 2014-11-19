@@ -17,10 +17,18 @@
 
 @end
 
-@implementation AppDelegate
+@implementation AppDelegate {
+    BOOL isFirstLaunch;
+}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    isFirstLaunch = [[NSUserDefaults standardUserDefaults] boolForKey:@"isFirstLaunch"];
+    
+    if (isFirstLaunch) {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isFirstLaunch"];
+    }
+    
     // Override point for customization after application launch.
     return YES;
 }

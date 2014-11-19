@@ -17,7 +17,6 @@
 @implementation GameOverScene {
     SKAction *waitDuration;
     SKAction *revealGameScene;
-    SKAction *changeLabelColor;
     SKColor *iOSBlueButtonColor;
 }
 
@@ -70,9 +69,7 @@
         self.playAgainLabel.position = CGPointMake(self.size.width / 2, self.size.height * 0.4);
         [self addChild:self.playAgainLabel];
         
-        changeLabelColor = [SKAction runBlock:^{
-            self.playAgainLabel.fontColor = [SKColor greenColor];
-        }];
+        
         
         //Create actions to wait and go back to Game Scene
         waitDuration = [SKAction waitForDuration:0.05];
@@ -83,10 +80,8 @@
             SKScene * myScene = [[GameScene alloc] initWithSize:self.size];
             [self.view presentScene:myScene transition: reveal];
         }];
-        
     }
     return self;
-    
 }
 
 //Touch started. Change text color if touch is Retry label to simulate active state of a button

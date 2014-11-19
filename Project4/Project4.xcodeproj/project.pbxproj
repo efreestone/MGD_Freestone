@@ -44,6 +44,7 @@
 		B8AB5BE31A18425D00971C7A /* miss.caf in Resources */ = {isa = PBXBuildFile; fileRef = B8AB5BDE1A18425D00971C7A /* miss.caf */; };
 		B8AB5BE41A18425D00971C7A /* win.caf in Resources */ = {isa = PBXBuildFile; fileRef = B8AB5BDF1A18425D00971C7A /* win.caf */; };
 		B8AB5BE71A18426A00971C7A /* GameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B8AB5BE61A18426A00971C7A /* GameOverScene.m */; };
+		B8DE07541A1C06300037379E /* MainMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B8DE07531A1C06300037379E /* MainMenuScene.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,8 @@
 		B8AB5BDF1A18425D00971C7A /* win.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = win.caf; sourceTree = "<group>"; };
 		B8AB5BE51A18426A00971C7A /* GameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverScene.h; sourceTree = "<group>"; };
 		B8AB5BE61A18426A00971C7A /* GameOverScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverScene.m; sourceTree = "<group>"; };
+		B8DE07521A1C06300037379E /* MainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuScene.h; sourceTree = "<group>"; };
+		B8DE07531A1C06300037379E /* MainMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuScene.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +161,8 @@
 				B811A6AC1A18413C00D1F454 /* Supporting Files */,
 				B8AB5BE51A18426A00971C7A /* GameOverScene.h */,
 				B8AB5BE61A18426A00971C7A /* GameOverScene.m */,
+				B8DE07521A1C06300037379E /* MainMenuScene.h */,
+				B8DE07531A1C06300037379E /* MainMenuScene.m */,
 			);
 			path = Project4;
 			sourceTree = "<group>";
@@ -369,6 +374,7 @@
 				B811A6BA1A18413C00D1F454 /* GameViewController.m in Sources */,
 				B811A6B21A18413C00D1F454 /* AppDelegate.m in Sources */,
 				B811A6B51A18413C00D1F454 /* GameScene.m in Sources */,
+				B8DE07541A1C06300037379E /* MainMenuScene.m in Sources */,
 				B811A6AF1A18413C00D1F454 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

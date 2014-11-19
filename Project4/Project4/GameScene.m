@@ -225,6 +225,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
             flashBackground.hidden = NO;
             isFlashing = YES;
             [self runAction:[SKAction sequence:@[flashDelay, removeFlashBackground]]];
+            //[self runAction:removeFlashBackground];
         }
         
         //Remove lives as spaceships are missed
