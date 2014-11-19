@@ -14,6 +14,7 @@
 #import "MainMenuScene.h"
 #import "GameScene.h"
 #import "HowToScene.h"
+#import "AboutScene.h"
 
 @implementation MainMenuScene {
     SKAction *waitDuration;
@@ -82,6 +83,7 @@
         //Alloc scenes
         SKScene *gameScene = [[GameScene alloc] initWithSize:self.size];
         SKScene *howToScene = [[HowToScene alloc] initWithSize:self.size];
+        SKScene *aboutScene = [[AboutScene alloc] initWithSize:self.size];
         
         //Create actions to wait and go to appropriate scene
         waitDuration = [SKAction waitForDuration:0.05];
@@ -89,13 +91,19 @@
             //Change label back to iOS blue
             self.playButtonLabel.fontColor = iOSBlueButtonColor;
             SKTransition *reveal = [SKTransition doorsOpenVerticalWithDuration:0.5];
-            [self.view presentScene:gameScene transition: reveal];
+            [self.view presentScene:gameScene transition:reveal];
         }];
         revealHowToScene = [SKAction runBlock:^{
             //Change label back to iOS blue
             self.howToPlayLabel.fontColor = iOSBlueButtonColor;
-            SKTransition *reveal = [SKTransition doorsCloseHorizontalWithDuration:0.5];
-            [self.view presentScene:howToScene transition: reveal];
+            SKTransition *reveal = [SKTransition flipVerticalWithDuration:0.5];
+            [self.view presentScene:howToScene transition:reveal];
+        }];
+        revealAboutScene = [SKAction runBlock:^{
+            //Change label back to iOS blue
+            self.howToPlayLabel.fontColor = iOSBlueButtonColor;
+            SKTransition *reveal = [SKTransition flipHorizontalWithDuration:0.5];
+            [self.view presentScene:aboutScene transition:reveal];
         }];
     
     }
@@ -134,7 +142,7 @@
     CGPoint location = [touch locationInNode:self];
     //Check if touch point is Try Again label
     SKNode *touchedLabel = [self nodeAtPoint:location];
-    NSLog(@"Label: %@", touchedLabel.name);
+    //NSLog(@"Label: %@", touchedLabel.name);
     //Play button label
     if ([touchedLabel.name isEqual: @"playButtonLabel"]) {
         //NSLog(@"touch ended");
@@ -150,10 +158,9 @@
     
     //About button label
     if ([touchedLabel.name isEqual: @"aboutLabel"]) {
-    
+        [self runAction:[SKAction sequence:@[waitDuration, revealAboutScene]]];
         return;
     }
-
 }
 
 @end

@@ -4,7 +4,7 @@
 // November 18th, 2014
 
 //
-//  HowToScene.h
+//  AboutScene.h
 //  Project4
 //
 //  Created by Elijah Freestone on 11/18/14.
@@ -13,7 +13,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface HowToScene : SKScene
+@interface AboutScene : SKScene
 
 @property (strong, nonatomic) SKLabelNode *backLabel;
 

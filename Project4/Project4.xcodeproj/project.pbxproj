@@ -46,6 +46,7 @@
 		B8AB5BE71A18426A00971C7A /* GameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B8AB5BE61A18426A00971C7A /* GameOverScene.m */; };
 		B8DE07541A1C06300037379E /* MainMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B8DE07531A1C06300037379E /* MainMenuScene.m */; };
 		B8DE07571A1C38230037379E /* HowToScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B8DE07561A1C38230037379E /* HowToScene.m */; };
+		B8DE075A1A1C42A90037379E /* AboutScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B8DE07591A1C42A90037379E /* AboutScene.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +109,8 @@
 		B8DE07531A1C06300037379E /* MainMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuScene.m; sourceTree = "<group>"; };
 		B8DE07551A1C38230037379E /* HowToScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HowToScene.h; sourceTree = "<group>"; };
 		B8DE07561A1C38230037379E /* HowToScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HowToScene.m; sourceTree = "<group>"; };
+		B8DE07581A1C42A90037379E /* AboutScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutScene.h; sourceTree = "<group>"; };
+		B8DE07591A1C42A90037379E /* AboutScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutScene.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +171,8 @@
 				B8DE07531A1C06300037379E /* MainMenuScene.m */,
 				B8DE07551A1C38230037379E /* HowToScene.h */,
 				B8DE07561A1C38230037379E /* HowToScene.m */,
+				B8DE07581A1C42A90037379E /* AboutScene.h */,
+				B8DE07591A1C42A90037379E /* AboutScene.m */,
 			);
 			path = Project4;
 			sourceTree = "<group>";
@@ -375,6 +380,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8DE075A1A1C42A90037379E /* AboutScene.m in Sources */,
 				B8AB5BE71A18426A00971C7A /* GameOverScene.m in Sources */,
 				B8DE07571A1C38230037379E /* HowToScene.m in Sources */,
 				B811A6BA1A18413C00D1F454 /* GameViewController.m in Sources */,

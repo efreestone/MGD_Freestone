@@ -4,17 +4,17 @@
 // November 18th, 2014
 
 //
-//  HowToScene.m
+//  AboutScene.m
 //  Project4
 //
 //  Created by Elijah Freestone on 11/18/14.
 //  Copyright (c) 2014 Elijah Freestone. All rights reserved.
 //
 
-#import "HowToScene.h"
+#import "AboutScene.h"
 #import "MainMenuScene.h"
 
-@implementation HowToScene {
+@implementation AboutScene {
     SKColor *iOSBlueButtonColor;
 }
 
@@ -66,9 +66,10 @@
     SKNode *touchedLabel = [self nodeAtPoint:location];
     
     if ([touchedLabel.name isEqual: @"backLabel"]) {
+        //Change label back to iOS blue
         self.backLabel.fontColor = iOSBlueButtonColor;
         SKScene *mainMenuScene = [[MainMenuScene alloc] initWithSize:self.size];
-        SKTransition *reveal = [SKTransition flipVerticalWithDuration:0.5];
+        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:0.5];
         [self.view presentScene:mainMenuScene transition: reveal];
     }
 }
