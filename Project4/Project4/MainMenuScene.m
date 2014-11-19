@@ -19,14 +19,9 @@
 @implementation MainMenuScene {
     SKAction *waitDuration;
     SKAction *revealGameScene;
-    SKAction *changeLabelColor;
-    
     SKAction *revealHowToScene;
     SKAction *revealAboutScene;
-    
     SKColor *iOSBlueButtonColor;
-    
-    //SKLabelNode *touchedLabel;
 }
 
 -(id)initWithSize:(CGSize)size {
@@ -105,7 +100,6 @@
             SKTransition *reveal = [SKTransition flipHorizontalWithDuration:0.5];
             [self.view presentScene:aboutScene transition:reveal];
         }];
-    
     }
     return self;
 }
@@ -118,7 +112,6 @@
     
     //Play button label
     if ([touchedLabel.name isEqual: @"playButtonLabel"]) {
-        //NSLog(@"touch ended");
         self.playButtonLabel.fontColor = [SKColor grayColor];
         return;
     }
@@ -145,7 +138,6 @@
     //NSLog(@"Label: %@", touchedLabel.name);
     //Play button label
     if ([touchedLabel.name isEqual: @"playButtonLabel"]) {
-        //NSLog(@"touch ended");
         [self runAction:[SKAction sequence:@[waitDuration, revealGameScene]]];
         return;
     }
