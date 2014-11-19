@@ -11,6 +11,14 @@
 //  Copyright (c) 2014 Elijah Freestone. All rights reserved.
 //
 
+//- (void) changeScene {
+//    SKView *spriteView = (SKView *) self.view;
+//    SKScene *currentScene = [spriteView scene];
+//    SKScene *newScene = [MySceneClass scene];
+//    [newScene.userData setObject:[currentScene.userData objectForKey:@"score"] forKey:@"score"];
+//    [spriteView presentScene:newScene];
+//}
+
 #import "GameViewController.h"
 #import "GameScene.h"
 #import "MainMenuScene.h"

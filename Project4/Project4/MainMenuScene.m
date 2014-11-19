@@ -13,6 +13,7 @@
 
 #import "MainMenuScene.h"
 #import "GameScene.h"
+#import "HowToScene.h"
 
 @implementation MainMenuScene {
     SKAction *waitDuration;
@@ -47,7 +48,7 @@
         titleLabel.text = @"AstroBlaster";
         titleLabel.fontColor = [SKColor whiteColor];
         titleLabel.fontSize = fontSize * 0.75;
-        float titleLabelHeightPlus = titleLabel.frame.size.height + fontSize/2;
+        float titleLabelHeightPlus = titleLabel.frame.size.height + fontSize / 2;
         titleLabel.position = CGPointMake(self.size.width / 2, self.size.height - titleLabelHeightPlus);
         [self addChild:titleLabel];
         
@@ -80,14 +81,21 @@
         
         //Alloc scenes
         SKScene *gameScene = [[GameScene alloc] initWithSize:self.size];
+        SKScene *howToScene = [[HowToScene alloc] initWithSize:self.size];
         
         //Create actions to wait and go to appropriate scene
         waitDuration = [SKAction waitForDuration:0.05];
         revealGameScene = [SKAction runBlock:^{
             //Change label back to iOS blue
-            //self.playAgainLabel.fontColor = iOSBlueButtonColor;
+            self.playButtonLabel.fontColor = iOSBlueButtonColor;
             SKTransition *reveal = [SKTransition doorsOpenVerticalWithDuration:0.5];
             [self.view presentScene:gameScene transition: reveal];
+        }];
+        revealHowToScene = [SKAction runBlock:^{
+            //Change label back to iOS blue
+            self.howToPlayLabel.fontColor = iOSBlueButtonColor;
+            SKTransition *reveal = [SKTransition doorsCloseHorizontalWithDuration:0.5];
+            [self.view presentScene:howToScene transition: reveal];
         }];
     
     }
@@ -136,7 +144,7 @@
     
     //How to button label
     if ([touchedLabel.name isEqual: @"howToPlayLabel"]) {
-        
+        [self runAction:[SKAction sequence:@[waitDuration, revealHowToScene]]];
         return;
     }
     
