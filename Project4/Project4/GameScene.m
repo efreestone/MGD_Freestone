@@ -29,6 +29,8 @@ static const uint32_t enemyShipCategory =  0x1 << 1;
 @property (strong, nonatomic) SKLabelNode *pauseLabel;
 @property (strong, nonatomic) NSMutableArray *explosionTextures;
 
+//@property (strong, nonatomic) SKSpriteNode *laserBallNode;
+
 @end
 
 //Add standard implementations of vector math routines for projectile trajectory.
@@ -225,7 +227,6 @@ static inline CGPoint rwNormalize(CGPoint a) {
             flashBackground.hidden = NO;
             isFlashing = YES;
             [self runAction:[SKAction sequence:@[flashDelay, removeFlashBackground]]];
-            //[self runAction:removeFlashBackground];
         }
         
         //Remove lives as spaceships are missed
@@ -256,7 +257,6 @@ static inline CGPoint rwNormalize(CGPoint a) {
     laserBallNode.physicsBody.contactTestBitMask = enemyShipCategory;
     laserBallNode.physicsBody.collisionBitMask = 0;
     laserBallNode.physicsBody.usesPreciseCollisionDetection = YES;
-    
 }
 
 //track time since last spawn and add new enemy every 1 second
@@ -340,6 +340,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
         //Set velocity and create actions for the laser ball
         float velocity = 400.0 * velocityMultiplier;
         float realMoveDuration = self.size.width / velocity;
+        SKAction *shotDelay = [SKAction waitForDuration:0.1];
         SKAction *actionShoot = [SKAction moveTo:finalDestination duration:realMoveDuration];
         SKAction *actionShootDone = [SKAction removeFromParent];
         
@@ -348,13 +349,14 @@ static inline CGPoint rwNormalize(CGPoint a) {
             //Make sure laser ball exists
             if (laserBallNode != nil) {
                 //Play laser fire sound
-                
-                [laserBallNode runAction:[SKAction sequence:@[actionShoot, actionShootDone]]];
                 [self runAction:laserSoundAction];
             } else {
                 NSLog(@"laserBallNode NIL!");
             }
         }];
+        //Moving the run action outside of the completion loop bypasses the stuck node issue.
+        //A 0.1 delay is added to match the duration of the rotate action
+        [laserBallNode runAction:[SKAction sequence:@[shotDelay, actionShoot, actionShootDone]]];
     }
 }
 

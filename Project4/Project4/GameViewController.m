@@ -17,11 +17,6 @@
 
 @implementation GameViewController
 
--(void)viewDidLoad {
-    
-    [super viewDidLoad];
-}
-
 //Move scene creation from viewDidLoad to insure view is created
 -(void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
@@ -29,8 +24,8 @@
     // Configure the view.
     SKView * skView = (SKView *)self.view;
     if (!skView.scene) {
-        skView.showsFPS = YES;
-        skView.showsNodeCount = YES;
+//        skView.showsFPS = YES;
+//        skView.showsNodeCount = YES;
         /* Sprite Kit applies additional optimizations to improve rendering performance */
         skView.ignoresSiblingOrder = YES;
         

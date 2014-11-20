@@ -29,9 +29,9 @@
         iOSBlueButtonColor = [SKColor colorWithRed:0 green:0.478431 blue:1.0 alpha:1.0];
         
         //Adjust font size based on device
-        CGFloat fontSize = 40;
+        CGFloat fontSize = 20;
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-            fontSize = 75;
+            fontSize = 38;
         }
         
         //Create and set message label
@@ -39,10 +39,25 @@
         self.backLabel.text = @"Back";
         self.backLabel.name = @"backLabel";
         self.backLabel.fontColor = iOSBlueButtonColor;
-        self.backLabel.fontSize = fontSize * 0.5;
-        float backLabelPlacement = self.backLabel.frame.size.height + fontSize * 0.5;
-        self.backLabel.position = CGPointMake(backLabelPlacement, self.size.height - (fontSize * 0.6));
+        self.backLabel.fontSize = fontSize;
+        float backLabelPlacement = self.backLabel.frame.size.height + fontSize;
+        self.backLabel.position = CGPointMake(backLabelPlacement, self.size.height - (fontSize * 1.25));
         [self addChild:self.backLabel];
+        
+        //Create about sentence labels
+        SKLabelNode *aboutLabelOne = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
+        aboutLabelOne.text = @"AstroBlaster is a project by Elijah Freestone";
+        aboutLabelOne.fontColor = [SKColor whiteColor];
+        aboutLabelOne.fontSize = fontSize;
+        aboutLabelOne.position = CGPointMake(self.size.width / 2, self.size.height * 0.55);
+        [self addChild:aboutLabelOne];
+        
+        SKLabelNode *aboutLabelTwo = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
+        aboutLabelTwo.text = @"for Mobile Game Design term 1411";
+        aboutLabelTwo.fontColor = [SKColor whiteColor];
+        aboutLabelTwo.fontSize = fontSize;
+        aboutLabelTwo.position = CGPointMake(self.size.width / 2, self.size.height * 0.45);
+        [self addChild:aboutLabelTwo];
     }
     return self;
 }
