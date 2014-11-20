@@ -16,5 +16,7 @@
 @interface HowToScene : SKScene
 
 @property (strong, nonatomic) SKLabelNode *backLabel;
+@property (strong, nonatomic) SKLabelNode *nextLabel;
+@property (strong, nonatomic) SKSpriteNode *backgroundImage;
 
 @end
