@@ -26,14 +26,13 @@
     if (!skView.scene) {
 //        skView.showsFPS = YES;
 //        skView.showsNodeCount = YES;
+//        skView.showsPhysics = YES;
         /* Sprite Kit applies additional optimizations to improve rendering performance */
         skView.ignoresSiblingOrder = YES;
         
-        // Create and configure the scene.
+        // Create and configure the Main Menu scene.
         MainMenuScene *scene = [MainMenuScene sceneWithSize:skView.bounds.size];
         scene.scaleMode = SKSceneScaleModeAspectFill;
-        
-        //skView.showsPhysics = YES;
         
         // Present the scene.
         [skView presentScene:scene];

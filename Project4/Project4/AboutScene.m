@@ -36,7 +36,7 @@
         
         //Create and set message label
         self.backLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
-        self.backLabel.text = @"Back";
+        self.backLabel.text = @"Menu";
         self.backLabel.name = @"backLabel";
         self.backLabel.fontColor = iOSBlueButtonColor;
         self.backLabel.fontSize = fontSize;
@@ -53,7 +53,7 @@
         [self addChild:aboutLabelOne];
         
         SKLabelNode *aboutLabelTwo = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
-        aboutLabelTwo.text = @"for Mobile Game Design term 1411";
+        aboutLabelTwo.text = @"for Mobile Game Design term 1411,";
         aboutLabelTwo.fontColor = [SKColor whiteColor];
         aboutLabelTwo.fontSize = fontSize;
         aboutLabelTwo.position = CGPointMake(self.size.width / 2, self.size.height * 0.5);

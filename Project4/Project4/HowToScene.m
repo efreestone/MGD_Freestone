@@ -31,6 +31,8 @@
             backgroundPadding = 110;
         }
         
+        //Set background to first of three images.
+        //background number is incremented to display the next image
         backgroundNumber = 1;
         backgroundName = [NSString stringWithFormat:@"how-to-%d", backgroundNumber];
         
@@ -45,7 +47,7 @@
         
         //Create and set back label
         self.backLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
-        self.backLabel.text = @"Back";
+        self.backLabel.text = @"Menu";
         self.backLabel.name = @"backLabel";
         self.backLabel.zPosition = 2;
         self.backLabel.fontColor = iOSBlueButtonColor;
@@ -98,6 +100,7 @@
         [self.view presentScene:mainMenuScene transition: reveal];
     }
     
+    //Next label cycles through backgrounds
     if ([touchedLabel.name isEqual: @"nextLabel"]) {
         self.nextLabel.fontColor = iOSBlueButtonColor;
         backgroundNumber++;

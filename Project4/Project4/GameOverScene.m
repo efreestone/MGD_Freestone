@@ -69,8 +69,6 @@
         self.playAgainLabel.position = CGPointMake(self.size.width / 2, self.size.height * 0.4);
         [self addChild:self.playAgainLabel];
         
-        
-        
         //Create actions to wait and go back to Game Scene
         waitDuration = [SKAction waitForDuration:0.05];
         revealGameScene = [SKAction runBlock:^{
