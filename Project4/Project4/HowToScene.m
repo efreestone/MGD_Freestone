@@ -13,6 +13,7 @@
 
 #import "HowToScene.h"
 #import "MainMenuScene.h"
+#import "GameScene.h"
 
 @implementation HowToScene {
     SKColor *iOSBlueButtonColor;
@@ -85,6 +86,11 @@
         self.nextLabel.fontColor = [SKColor grayColor];
         return;
     }
+    
+    if ([touchedLabel.name isEqual:@"playLabel"]) {
+        self.nextLabel.fontColor = [SKColor grayColor];
+        return;
+    }
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -112,8 +118,30 @@
             self.backgroundImage.size = CGSizeMake(self.size.width - backgroundPadding, self.size.height - backgroundPadding);
             self.backgroundImage.position = CGPointMake(self.size.width / 2, self.size.height / 2);
             [self addChild:self.backgroundImage];
+            //Change next to play once all three tut images have been displayed
+            if (backgroundNumber == 3) {
+                self.nextLabel.name = @"playLabel";
+                self.nextLabel.text = @"Play";
+                touchedLabel = nil;
+            }
         }
     }
+    
+    //Play label starts the game and only exists once all 3 tut images have been shown
+    if ([touchedLabel.name isEqual:@"playLabel"]) {
+        SKScene *gameScene = [[GameScene alloc] initWithSize:self.size];
+        self.nextLabel.fontColor = iOSBlueButtonColor;
+        //Create actions to wait and go to appropriate scene
+        SKAction *waitDuration = [SKAction waitForDuration:0.05];
+        SKAction *revealGameScene = [SKAction runBlock:^{
+            SKTransition *reveal = [SKTransition doorsOpenVerticalWithDuration:0.5];
+            [self.view presentScene:gameScene transition:reveal];
+        }];
+        [self runAction:[SKAction sequence:@[waitDuration, revealGameScene]]];
+        
+    }
+    
+    
 }
 
 @end

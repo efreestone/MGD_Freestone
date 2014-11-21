@@ -13,6 +13,7 @@
 
 #import "GameScene.h"
 #import "GameOverScene.h"
+#import "MainMenuScene.h"
 
 //Set up category constants for laser balls and enemy spaceships
 //SpriteKit uses 32 bit ints that act as bitmasks
@@ -27,6 +28,7 @@ static const uint32_t enemyShipCategory =  0x1 << 1;
 @property (strong, nonatomic) SKLabelNode *scoreLabel;
 @property (strong, nonatomic) SKLabelNode *livesLabel;
 @property (strong, nonatomic) SKLabelNode *pauseLabel;
+@property (strong, nonatomic) SKLabelNode *menuLabel;
 @property (strong, nonatomic) NSMutableArray *explosionTextures;
 
 //@property (strong, nonatomic) SKSpriteNode *laserBallNode;
@@ -157,6 +159,17 @@ static inline CGPoint rwNormalize(CGPoint a) {
         self.pauseLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
         self.pauseLabel.position = CGPointMake(fontSize, screenHeight - labelGapFromFont);
         [self addChild:self.pauseLabel];
+        
+        //Create menu button
+        self.menuLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
+        self.menuLabel.text = @"Menu";
+        self.menuLabel.name = @"menuLabel";
+        self.menuLabel.fontColor = [SKColor whiteColor];
+        self.menuLabel.zPosition = 3;
+        self.menuLabel.fontSize = fontSize;
+        self.menuLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+        self.menuLabel.position = CGPointMake(fontSize, fontSize);
+        [self addChild:self.menuLabel];
         
         //Instantiate flash background triggered when a spaceship is missed
         //This seems to work fine on devices but still causes occasional delays in the sim
@@ -292,13 +305,23 @@ static inline CGPoint rwNormalize(CGPoint a) {
     //Grab touch and location within node
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
-    
-    //Pause Button
     SKNode *touchedLabel = [self nodeAtPoint:location];
+    //Pause Button
     if ([touchedLabel.name isEqual: @"pauseLabel"]) {
         NSLog(@"pause");
         [self pauseButtonPressed];
         return;
+    }
+    
+    //Menu button
+    if ([touchedLabel.name isEqual: @"menuLabel"]) {
+        MainMenuScene *mainMenuScene = [[MainMenuScene alloc] initWithSize:self.size];
+        SKAction *waitDuration = [SKAction waitForDuration:0.05];
+        SKAction *revealMenuScene = [SKAction runBlock:^{
+            SKTransition *reveal = [SKTransition doorsCloseVerticalWithDuration:0.5];
+            [self.view presentScene:mainMenuScene transition:reveal];
+        }];
+        [self runAction:[SKAction sequence:@[waitDuration, revealMenuScene]]];
     }
     
     if (!isPaused) {
@@ -306,7 +329,7 @@ static inline CGPoint rwNormalize(CGPoint a) {
         [self addLaserBall];
         
         //Determine offset of location to fighter
-        CGPoint offset = rwSub(location, self.playerFighterJet.position); //laserBallNode.position
+        CGPoint offset = rwSub(location, self.playerFighterJet.position);
         
         //Make sure not shooting backwards or up/down
         if (offset.x <= 0) return;
