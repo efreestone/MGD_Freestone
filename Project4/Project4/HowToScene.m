@@ -138,10 +138,7 @@
             [self.view presentScene:gameScene transition:reveal];
         }];
         [self runAction:[SKAction sequence:@[waitDuration, revealGameScene]]];
-        
     }
-    
-    
 }
 
 @end
