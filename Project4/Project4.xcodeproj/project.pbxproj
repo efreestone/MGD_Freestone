@@ -21,6 +21,12 @@
 		B8780BDE1A1EAE5F0019A2D7 /* how-to-2~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B8780BD81A1EAE5F0019A2D7 /* how-to-2~ipad.png */; };
 		B8780BDF1A1EAE5F0019A2D7 /* how-to-3@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B8780BD91A1EAE5F0019A2D7 /* how-to-3@2x~ipad.png */; };
 		B8780BE01A1EAE5F0019A2D7 /* how-to-3~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B8780BDA1A1EAE5F0019A2D7 /* how-to-3~ipad.png */; };
+		B8780BE31A1EB7F40019A2D7 /* how-to-1.png in Resources */ = {isa = PBXBuildFile; fileRef = B8780BE11A1EB7F40019A2D7 /* how-to-1.png */; };
+		B8780BE41A1EB7F40019A2D7 /* how-to-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8780BE21A1EB7F40019A2D7 /* how-to-1@2x.png */; };
+		B8780BE91A1EB8010019A2D7 /* how-to-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B8780BE51A1EB8010019A2D7 /* how-to-2.png */; };
+		B8780BEA1A1EB8010019A2D7 /* how-to-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8780BE61A1EB8010019A2D7 /* how-to-2@2x.png */; };
+		B8780BEB1A1EB8010019A2D7 /* how-to-3.png in Resources */ = {isa = PBXBuildFile; fileRef = B8780BE71A1EB8010019A2D7 /* how-to-3.png */; };
+		B8780BEC1A1EB8010019A2D7 /* how-to-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8780BE81A1EB8010019A2D7 /* how-to-3@2x.png */; };
 		B8AB5BB91A18424A00971C7A /* asteroid-1.png in Resources */ = {isa = PBXBuildFile; fileRef = B8AB5BAB1A18424A00971C7A /* asteroid-1.png */; };
 		B8AB5BBA1A18424A00971C7A /* explosion.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B8AB5BAC1A18424A00971C7A /* explosion.atlas */; };
 		B8AB5BBB1A18424A00971C7A /* fighter.png in Resources */ = {isa = PBXBuildFile; fileRef = B8AB5BAD1A18424A00971C7A /* fighter.png */; };
@@ -87,6 +93,12 @@
 		B8780BD81A1EAE5F0019A2D7 /* how-to-2~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "how-to-2~ipad.png"; sourceTree = "<group>"; };
 		B8780BD91A1EAE5F0019A2D7 /* how-to-3@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "how-to-3@2x~ipad.png"; sourceTree = "<group>"; };
 		B8780BDA1A1EAE5F0019A2D7 /* how-to-3~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "how-to-3~ipad.png"; sourceTree = "<group>"; };
+		B8780BE11A1EB7F40019A2D7 /* how-to-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "how-to-1.png"; sourceTree = "<group>"; };
+		B8780BE21A1EB7F40019A2D7 /* how-to-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "how-to-1@2x.png"; sourceTree = "<group>"; };
+		B8780BE51A1EB8010019A2D7 /* how-to-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "how-to-2.png"; sourceTree = "<group>"; };
+		B8780BE61A1EB8010019A2D7 /* how-to-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "how-to-2@2x.png"; sourceTree = "<group>"; };
+		B8780BE71A1EB8010019A2D7 /* how-to-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "how-to-3.png"; sourceTree = "<group>"; };
+		B8780BE81A1EB8010019A2D7 /* how-to-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "how-to-3@2x.png"; sourceTree = "<group>"; };
 		B8AB5BAB1A18424A00971C7A /* asteroid-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "asteroid-1.png"; sourceTree = "<group>"; };
 		B8AB5BAC1A18424A00971C7A /* explosion.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = explosion.atlas; sourceTree = "<group>"; };
 		B8AB5BAD1A18424A00971C7A /* fighter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fighter.png; sourceTree = "<group>"; };
@@ -218,6 +230,12 @@
 		B8AB5BAA1A18424A00971C7A /* art */ = {
 			isa = PBXGroup;
 			children = (
+				B8780BE51A1EB8010019A2D7 /* how-to-2.png */,
+				B8780BE61A1EB8010019A2D7 /* how-to-2@2x.png */,
+				B8780BE71A1EB8010019A2D7 /* how-to-3.png */,
+				B8780BE81A1EB8010019A2D7 /* how-to-3@2x.png */,
+				B8780BE11A1EB7F40019A2D7 /* how-to-1.png */,
+				B8780BE21A1EB7F40019A2D7 /* how-to-1@2x.png */,
 				B8780BD51A1EAE5F0019A2D7 /* how-to-1@2x~ipad.png */,
 				B8780BD61A1EAE5F0019A2D7 /* how-to-1~ipad.png */,
 				B8780BD71A1EAE5F0019A2D7 /* how-to-2@2x~ipad.png */,
@@ -354,13 +372,16 @@
 				B8780BDC1A1EAE5F0019A2D7 /* how-to-1~ipad.png in Resources */,
 				B8AB5BD31A18425300971C7A /* Default@2x~iphone.png in Resources */,
 				B8AB5BD91A18425300971C7A /* Icon@2x.png in Resources */,
+				B8780BE91A1EB8010019A2D7 /* how-to-2.png in Resources */,
 				B8AB5BD41A18425300971C7A /* Default~ipad.png in Resources */,
 				B8AB5BD81A18425300971C7A /* Icon.png in Resources */,
 				B8AB5BC21A18424A00971C7A /* space@3x~iphone.png in Resources */,
+				B8780BEA1A1EB8010019A2D7 /* how-to-2@2x.png in Resources */,
 				B8AB5BE41A18425D00971C7A /* win.caf in Resources */,
 				B8780BDF1A1EAE5F0019A2D7 /* how-to-3@2x~ipad.png in Resources */,
 				B8AB5BBD1A18424A00971C7A /* laser-ball.png in Resources */,
 				B8AB5BE21A18425D00971C7A /* lose.caf in Resources */,
+				B8780BE31A1EB7F40019A2D7 /* how-to-1.png in Resources */,
 				B8AB5BD61A18425300971C7A /* Icon-76.png in Resources */,
 				B8780BDB1A1EAE5F0019A2D7 /* how-to-1@2x~ipad.png in Resources */,
 				B8AB5BC11A18424A00971C7A /* space@2x~iphone.png in Resources */,
@@ -374,15 +395,18 @@
 				B8AB5BB91A18424A00971C7A /* asteroid-1.png in Resources */,
 				B8AB5BC31A18424A00971C7A /* spaceship.png in Resources */,
 				B8AB5BC61A18424A00971C7A /* space~iphone.png in Resources */,
+				B8780BEB1A1EB8010019A2D7 /* how-to-3.png in Resources */,
 				B8AB5BE31A18425D00971C7A /* miss.caf in Resources */,
 				B8AB5BD51A18425300971C7A /* Default~iphone.png in Resources */,
 				B8AB5BC51A18424A00971C7A /* space~ipad.png in Resources */,
+				B8780BE41A1EB7F40019A2D7 /* how-to-1@2x.png in Resources */,
 				B8AB5BE01A18425D00971C7A /* explosion.caf in Resources */,
 				B8AB5BBE1A18424A00971C7A /* laser-ball~ipad.png in Resources */,
 				B8AB5BC41A18424A00971C7A /* spaceship~ipad.png in Resources */,
 				B8AB5BBB1A18424A00971C7A /* fighter.png in Resources */,
 				B8780BDE1A1EAE5F0019A2D7 /* how-to-2~ipad.png in Resources */,
 				B8AB5BBC1A18424A00971C7A /* fighter~ipad.png in Resources */,
+				B8780BEC1A1EB8010019A2D7 /* how-to-3@2x.png in Resources */,
 				B8AB5BBA1A18424A00971C7A /* explosion.atlas in Resources */,
 				B8AB5BD21A18425300971C7A /* Default@2x~ipad.png in Resources */,
 				B8AB5BD71A18425300971C7A /* Icon-76@2x.png in Resources */,

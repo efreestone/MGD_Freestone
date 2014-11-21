@@ -58,6 +58,7 @@
         self.nextLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
         self.nextLabel.text = @"Next";
         self.nextLabel.name = @"nextLabel";
+        self.nextLabel.zPosition = 2;
         self.nextLabel.fontColor = iOSBlueButtonColor;
         self.nextLabel.fontSize = fontSize * 0.5;
         float nextLabelWidth = self.nextLabel.frame.size.width;
