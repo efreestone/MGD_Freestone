@@ -49,15 +49,22 @@
         aboutLabelOne.text = @"AstroBlaster is a project by Elijah Freestone";
         aboutLabelOne.fontColor = [SKColor whiteColor];
         aboutLabelOne.fontSize = fontSize;
-        aboutLabelOne.position = CGPointMake(self.size.width / 2, self.size.height * 0.55);
+        aboutLabelOne.position = CGPointMake(self.size.width / 2, self.size.height * 0.6);
         [self addChild:aboutLabelOne];
         
         SKLabelNode *aboutLabelTwo = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
         aboutLabelTwo.text = @"for Mobile Game Design term 1411";
         aboutLabelTwo.fontColor = [SKColor whiteColor];
         aboutLabelTwo.fontSize = fontSize;
-        aboutLabelTwo.position = CGPointMake(self.size.width / 2, self.size.height * 0.45);
+        aboutLabelTwo.position = CGPointMake(self.size.width / 2, self.size.height * 0.5);
         [self addChild:aboutLabelTwo];
+        
+        SKLabelNode *aboutLabelThree = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
+        aboutLabelThree.text = @"created with SpriteKit and Objective-C";
+        aboutLabelThree.fontColor = [SKColor whiteColor];
+        aboutLabelThree.fontSize = fontSize;
+        aboutLabelThree.position = CGPointMake(self.size.width / 2, self.size.height * 0.4);
+        [self addChild:aboutLabelThree];
     }
     return self;
 }
